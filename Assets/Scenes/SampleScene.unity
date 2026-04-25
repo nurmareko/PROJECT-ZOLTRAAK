@@ -274,7 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3403458384edc513b408706839e2ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  rb: {fileID: 170322455}
+  rigidBody: {fileID: 170322455}
+  animator: {fileID: 170322454}
   moveSpeed: 2.6
   playerMoveDirection: {x: 0, y: 0}
 --- !u!1 &287627450
