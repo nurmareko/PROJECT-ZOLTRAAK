@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 48f77f6275713b1d7b62995adcda1715
+guid: 95d556c54aa4892c5add96469cd7fe78
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5114378861885662781
-    second: background-removed (8) (1)_0
+      213: -5268542635369919342
+    second: Walk_Right_0
   - first:
-      213: -6868762688709304111
-    second: background-removed (8) (1)_1
+      213: -6418054059245859064
+    second: Walk_Right_1
   - first:
-      213: 1086101319924037846
-    second: background-removed (8) (1)_2
+      213: -4882036243900793782
+    second: Walk_Right_2
   - first:
-      213: 8568352633882758179
-    second: background-removed (8) (1)_3
+      213: -1862413736918858869
+    second: Walk_Right_3
+  - first:
+      213: -756417758426828632
+    second: Walk_Right_4
+  - first:
+      213: 3011884189738566441
+    second: Walk_Right_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 284
+  spritePixelsToUnits: 85
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -135,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background-removed (8) (1)_0
+      name: Walk_Right_0
       rect:
         serializedVersion: 2
-        x: 181
-        y: 692
-        width: 284
-        height: 513
+        x: 92
+        y: 54
+        width: 72
+        height: 148
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d36267d4a7ce9f640800000000000000
-      internalID: 5114378861885662781
+      spriteID: 29c86c6136062e6b0800000000000000
+      internalID: -5268542635369919342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background-removed (8) (1)_1
+      name: Walk_Right_1
       rect:
         serializedVersion: 2
-        x: 769
-        y: 692
-        width: 285
-        height: 513
+        x: 350
+        y: 52
+        width: 68
+        height: 152
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1d066051ab04da0a0800000000000000
-      internalID: -6868762688709304111
+      spriteID: 80f856166dd7ee6a0800000000000000
+      internalID: -6418054059245859064
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background-removed (8) (1)_2
+      name: Walk_Right_2
       rect:
         serializedVersion: 2
-        x: 181
-        y: 81
-        width: 284
-        height: 521
+        x: 598
+        y: 54
+        width: 82
+        height: 150
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6d8b724656b921f00800000000000000
-      internalID: 1086101319924037846
+      spriteID: a4cf5bdf6e58f3cb0800000000000000
+      internalID: -4882036243900793782
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background-removed (8) (1)_3
+      name: Walk_Right_3
       rect:
         serializedVersion: 2
-        x: 769
-        y: 81
-        width: 285
-        height: 513
+        x: 862
+        y: 52
+        width: 68
+        height: 152
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,8 +222,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 32c4ddcc257e8e670800000000000000
-      internalID: 8568352633882758179
+      spriteID: b83c422e2906726e0800000000000000
+      internalID: -1862413736918858869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Right_4
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 54
+        width: 72
+        height: 148
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a0fb2f6e0aa085f0800000000000000
+      internalID: -756417758426828632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Right_5
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 56
+        width: 88
+        height: 146
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9238bf186bc5cc920800000000000000
+      internalID: 3011884189738566441
       vertices: []
       indices: 
       edges: []
@@ -226,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 59d206757feb53fddbeebd83ae6c1bd9
+    spriteID: af2c12edb12f1386ca09f84318dc7fcc
     internalID: 0
     vertices: []
     indices: 
@@ -238,10 +288,12 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      background-removed (8) (1)_0: 5114378861885662781
-      background-removed (8) (1)_1: -6868762688709304111
-      background-removed (8) (1)_2: 1086101319924037846
-      background-removed (8) (1)_3: 8568352633882758179
+      Walk_Right_0: -5268542635369919342
+      Walk_Right_1: -6418054059245859064
+      Walk_Right_2: -4882036243900793782
+      Walk_Right_3: -1862413736918858869
+      Walk_Right_4: -756417758426828632
+      Walk_Right_5: 3011884189738566441
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
