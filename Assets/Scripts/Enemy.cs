@@ -28,4 +28,12 @@ public class Enemy : MonoBehaviour
             direction.y * moveSpeed
             );
     }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
