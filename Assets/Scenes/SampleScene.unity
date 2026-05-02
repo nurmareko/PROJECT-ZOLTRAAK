@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 170322456}
   - component: {fileID: 170322455}
   - component: {fileID: 170322457}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11454,7 +11454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1691695194}
   - component: {fileID: 1691695195}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11547,7 +11547,7 @@ GameObject:
   - component: {fileID: 1752069834}
   - component: {fileID: 1752069833}
   - component: {fileID: 1752069832}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
