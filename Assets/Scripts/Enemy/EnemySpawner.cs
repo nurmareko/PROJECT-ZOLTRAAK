@@ -21,5 +21,5 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         Instantiate(enemyPrefab, transform.position, transform.rotation);
-    }
+    } 
 }
