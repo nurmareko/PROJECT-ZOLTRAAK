@@ -198,7 +198,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &170322453
 Transform:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1157853293
 Transform:
   m_ObjectHideFlags: 0
@@ -86766,8 +86766,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 334803538}
   - {fileID: 619394802}
   - {fileID: 944761805}
   - {fileID: 170322453}
-  - {fileID: 334803538}
   - {fileID: 1157853293}
