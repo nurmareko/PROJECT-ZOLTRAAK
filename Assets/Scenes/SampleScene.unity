@@ -1664,6 +1664,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   spriteRenderer: {fileID: 1157853292}
+  rigidBody: {fileID: 1157853295}
+  moveSpeed: 2
 --- !u!1 &1560379881
 GameObject:
   m_ObjectHideFlags: 0
