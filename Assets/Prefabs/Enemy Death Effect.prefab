@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4006655428800257312}
   - component: {fileID: 3942063937477005449}
   - component: {fileID: 518132084989076793}
+  - component: {fileID: 6849417878440545754}
   m_Layer: 0
-  m_Name: Enemy Death Fx
+  m_Name: Enemy Death Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,3 +115,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6849417878440545754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206075682055354637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcc34befd946b788b2d9a2e229810c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimatedObjectDestroy
+  animator: {fileID: 518132084989076793}

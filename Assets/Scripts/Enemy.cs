@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private GameObject enemyDeathEffect;
     private Vector2 direction;
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
+            Instantiate(enemyDeathEffect, transform.position, transform.rotation);
         }
     }
 }
