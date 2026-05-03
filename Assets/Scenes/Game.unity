@@ -1364,7 +1364,7 @@ GameObject:
   - component: {fileID: 838882048}
   - component: {fileID: 838882047}
   m_Layer: 0
-  m_Name: Enemy Spawn Manager
+  m_Name: Enemy Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1383,7 +1383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 5440778069309592530, guid: 775247c0efa31de048c2fa2b45cd4118, type: 3}
-  spawnInterval: 1
+  spawnInterval: 2
 --- !u!4 &838882048
 Transform:
   m_ObjectHideFlags: 0
