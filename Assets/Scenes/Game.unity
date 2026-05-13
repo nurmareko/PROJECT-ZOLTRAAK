@@ -317,52 +317,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.48333332}
   m_Size: {x: 0.96666664, y: 0.96666664}
   m_Direction: 0
---- !u!1 &195046802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 195046803}
-  - component: {fileID: 195046804}
-  m_Layer: 0
-  m_Name: Enemy Spawner (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &195046803
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195046802}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.71, y: 2.95, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1598332282}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &195046804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195046802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ce87a82f7ab8db9a8839bf44d453d0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 7454663780394956314, guid: 4e8fdcccecf98e7c1a85735c829e5aa5, type: 3}
-  spawnInterval: 2
 --- !u!1 &287627450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,8 +1382,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce87a82f7ab8db9a8839bf44d453d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 5440778069309592530, guid: 775247c0efa31de048c2fa2b45cd4118, type: 3}
-  spawnInterval: 2
+  waves:
+  - enemyPrefab: {fileID: 5440778069309592530, guid: 775247c0efa31de048c2fa2b45cd4118, type: 3}
+    spawnInterval: 1
+    enemiesPerWave: 5
+    spawnedEnemyCount: 1
+    spawnTimer: 0
+  - enemyPrefab: {fileID: 7454663780394956314, guid: 4e8fdcccecf98e7c1a85735c829e5aa5, type: 3}
+    spawnInterval: 1
+    enemiesPerWave: 5
+    spawnedEnemyCount: 1
+    spawnTimer: 0
+  waveNumber: 0
 --- !u!4 &838882048
 Transform:
   m_ObjectHideFlags: 0
@@ -11341,7 +11305,6 @@ Transform:
   - {fileID: 334803538}
   - {fileID: 619394802}
   - {fileID: 838882048}
-  - {fileID: 195046803}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1691695193

@@ -1,25 +1,50 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public float spawnInterval;
-    private float spawnTimer;
+    [System.Serializable]
+    public class Wave
+    {
+        public GameObject enemyPrefab;
+        public float spawnInterval;
+        public int enemiesPerWave;
+        public int spawnedEnemyCount;
+        public float spawnTimer;
+    }
 
+    public List <Wave> waves;
+    public int waveNumber;
 
     // Update is called once per frame
     void Update()
     {
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnInterval)
+        waves[waveNumber].spawnTimer += Time.deltaTime;
+        if (waves[waveNumber].spawnTimer >= waves[waveNumber].spawnInterval)
         {
-            spawnTimer = 0;
+            waves[waveNumber].spawnTimer = 0;
             SpawnEnemy();
+        }
+        if (waves[waveNumber].spawnedEnemyCount >= waves[waveNumber].enemiesPerWave)
+        {
+            waves[waveNumber].spawnedEnemyCount = 0;
+
+            if (waves[waveNumber].spawnInterval > 0.3f)
+            {
+                waves[waveNumber].spawnInterval *= 0.9f;
+            }
+
+            waveNumber++;
+        }
+        if (waveNumber >= waves.Count)
+        {
+            waveNumber = 0;
         }
     }
 
     private void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, transform.position, transform.rotation);
+        Instantiate(waves[waveNumber].enemyPrefab, transform.position, transform.rotation);
+        waves[waveNumber].spawnedEnemyCount++;
     } 
 }
