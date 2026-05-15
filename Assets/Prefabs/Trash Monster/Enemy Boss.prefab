@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   spriteRenderer: {fileID: 6209836402569991432}
   rigidBody: {fileID: 7478109828603465121}
-  moveSpeed: 0
+  moveSpeed: 2
   enemyDeathEffect: {fileID: 6061811255798151043, guid: 6982c6048adefd492a456946ab2067a3, type: 3}
 --- !u!1 &8854282451611100487
 GameObject:

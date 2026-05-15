@@ -1417,12 +1417,17 @@ MonoBehaviour:
   waves:
   - enemyPrefab: {fileID: 5440778069309592530, guid: 775247c0efa31de048c2fa2b45cd4118, type: 3}
     spawnInterval: 1
-    enemiesPerWave: 5
+    enemiesPerWave: 10
     spawnedEnemyCount: 1
     spawnTimer: 0
   - enemyPrefab: {fileID: 7454663780394956314, guid: 4e8fdcccecf98e7c1a85735c829e5aa5, type: 3}
     spawnInterval: 1
-    enemiesPerWave: 5
+    enemiesPerWave: 10
+    spawnedEnemyCount: 1
+    spawnTimer: 0
+  - enemyPrefab: {fileID: 2837596936878299267, guid: 51523c7e3e7ac2c8696519df3c094d75, type: 3}
+    spawnInterval: 1
+    enemiesPerWave: 1
     spawnedEnemyCount: 1
     spawnTimer: 0
   waveNumber: 0
@@ -1535,10 +1540,6 @@ PrefabInstance:
     - target: {fileID: 2837596936878299267, guid: 51523c7e3e7ac2c8696519df3c094d75, type: 3}
       propertyPath: m_Name
       value: Enemy Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 7338582446162153860, guid: 51523c7e3e7ac2c8696519df3c094d75, type: 3}
-      propertyPath: moveSpeed
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8696797024629670683, guid: 51523c7e3e7ac2c8696519df3c094d75, type: 3}
       propertyPath: m_LocalPosition.x
