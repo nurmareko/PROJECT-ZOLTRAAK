@@ -10,30 +10,33 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject enemyDeathEffect;
     private Vector2 direction;
 
-    // Update is called once per frame
-    void Update()
-    {
-        float playerX = PlayerController.Instance.transform.position.x;
-        float enemyX = gameObject.transform.position.x;
-        bool isPlayerOnRight = playerX > enemyX;
-        spriteRenderer.flipX = isPlayerOnRight;
-
-        Vector2 playerPosn = PlayerController.Instance.transform.position;
-        direction = (playerPosn - (Vector2) transform.position).normalized;
-    }
-
     void FixedUpdate()
     {
-        rigidBody.linearVelocity = new Vector2(
-            direction.x * moveSpeed,
-            direction.y * moveSpeed
+        if (PlayerController.Instance.gameObject.activeSelf)
+        {
+            float playerX = PlayerController.Instance.transform.position.x;
+            float enemyX = gameObject.transform.position.x;
+            bool isPlayerOnRight = playerX > enemyX;
+            spriteRenderer.flipX = isPlayerOnRight;
+
+            Vector2 playerPosn = PlayerController.Instance.transform.position;
+            direction = (playerPosn - (Vector2) transform.position).normalized;
+
+            rigidBody.linearVelocity = new Vector2(
+                direction.x * moveSpeed,
+                direction.y * moveSpeed
             );
+        } else
+        {
+            rigidBody.linearVelocity = Vector2.zero;
+        }
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            PlayerController.Instance.takeDamage(1);
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
         }

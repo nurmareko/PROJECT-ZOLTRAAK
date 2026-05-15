@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] public Vector2 playerMoveDirection;
+    [SerializeField] public float maxHealth;
+    [SerializeField] public float currentHealth;
 
     void Awake()
     {
@@ -18,6 +20,12 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        UIController.Instance.UpdateHealthSlider();
     }
 
     // Update is called once per frame
@@ -41,5 +49,17 @@ public class PlayerController : MonoBehaviour
             playerMoveDirection.x * moveSpeed,
             playerMoveDirection.y * moveSpeed
             );
+    }
+
+    public void takeDamage(float damage)
+    {
+        currentHealth -= damage;
+
+        UIController.Instance.UpdateHealthSlider();
+
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
