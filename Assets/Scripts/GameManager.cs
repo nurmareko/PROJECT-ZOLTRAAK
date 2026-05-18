@@ -17,6 +17,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            Pause();
+        }
+    }
+
     public void GameOver()
     {
         StartCoroutine(showGameOverScreen(  ));
@@ -31,5 +39,16 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("Game"); 
+    }
+
+     public void Pause()
+    {
+        if (UIController.Instance.PausePanel.activeSelf == false)
+        {
+            UIController.Instance.PausePanel.SetActive(true);
+        } else
+        {
+            UIController.Instance.PausePanel.SetActive(false);
+        }
     }
 }
