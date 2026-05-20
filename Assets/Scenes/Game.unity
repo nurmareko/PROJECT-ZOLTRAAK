@@ -313,6 +313,8 @@ MonoBehaviour:
   playerMoveDirection: {x: 0, y: 0}
   maxHealth: 3
   currentHealth: 3
+  immunityDuration: 2
+  immunityTimer: 0
 --- !u!70 &170322457
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1589,6 +1591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2227c0cd86d0ebb1d90b370b4ef91ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  gameTime: 0
 --- !u!4 &657018870
 Transform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Vector2 playerMoveDirection;
     [SerializeField] public float maxHealth;
     [SerializeField] public float currentHealth;
+
+    private bool immune;
+    [SerializeField] private float immunityDuration;
+    [SerializeField] private float immunityTimer;
 
     void Awake()
     {
@@ -41,6 +46,13 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Move Y", inputY);
         animator.SetBool("Is Moving", playerMoveDirection != Vector2.zero);
 
+        if (immunityTimer > 0)
+        {
+            immunityTimer -= Time.deltaTime;
+        } else
+        {
+            immune = false;
+        }
     }
 
     void FixedUpdate()
@@ -53,14 +65,19 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        currentHealth -= damage;
-
-        UIController.Instance.UpdateHealthSlider();
-
-        if (currentHealth <= 0)
+        if (!immune)
         {
-            gameObject.SetActive(false);  
-            GameManager.Instance.GameOver();
+            immune = true;
+            immunityTimer = immunityDuration;
+            currentHealth -= damage;
+
+            UIController.Instance.UpdateHealthSlider();
+
+            if (currentHealth <= 0)
+            {
+                gameObject.SetActive(false);  
+                GameManager.Instance.GameOver();
+            }
         }
     }
 }

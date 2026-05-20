@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float damage;
     [SerializeField] private GameObject enemyDeathEffect;
     private Vector2 direction;
 
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.takeDamage(1);
+            PlayerController.Instance.takeDamage(damage);
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
         }

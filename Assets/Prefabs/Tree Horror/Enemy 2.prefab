@@ -287,4 +287,5 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6358715192781227388}
   rigidBody: {fileID: 815399751465989363}
   moveSpeed: 1.5
+  damage: 1
   enemyDeathEffect: {fileID: 2681898949079663030, guid: 803c5f37f3f45a484ad95643cf13f5e1, type: 3}
