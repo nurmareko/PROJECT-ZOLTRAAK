@@ -5,7 +5,8 @@ public class AreaWeapon : MonoBehaviour
     [SerializeField] private GameObject prefab;
     private float spawnCounter;
     public float cooldown = 5f;
-    public float duration = 3f; 
+    public float duration = 3f;
+    public float damage = 1f;
 
     // Update is called once per frame
     void Update()

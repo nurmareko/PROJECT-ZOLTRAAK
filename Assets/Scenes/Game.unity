@@ -2781,6 +2781,7 @@ MonoBehaviour:
   prefab: {fileID: 2128959240006071220, guid: 0fd43efa09888ea3b94635c5510cfded, type: 3}
   cooldown: 5
   duration: 3
+  damage: 1
 --- !u!1 &1457751339
 GameObject:
   m_ObjectHideFlags: 0

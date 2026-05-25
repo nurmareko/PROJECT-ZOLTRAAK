@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -959796967
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -750047184722822154, guid: d4dcf0295f09d69598c66e6040778e7c, type: 3}
@@ -176,6 +176,7 @@ MonoBehaviour:
   rigidBody: {fileID: 5161318197006807143}
   moveSpeed: 1
   damage: 1
+  health: 50
   enemyDeathEffect: {fileID: 6206075682055354637, guid: fd33486bbf271f6cd8916cc8681b3514, type: 3}
 --- !u!95 &7998344866492696640
 Animator:
@@ -277,7 +278,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -959796967
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4756028443593143600, guid: da4542210bc7056fab886fd5527de406, type: 3}
