@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaWeaponPrefab : MonoBehaviour
@@ -5,6 +6,9 @@ public class AreaWeaponPrefab : MonoBehaviour
     public AreaWeapon weapon;
     private Vector3 targetSize;
     private float timer;
+    public List<Enemy> enemiesInRange;
+    private float counter;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,14 +36,26 @@ public class AreaWeaponPrefab : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        // periodic damage
+        counter -= Time.deltaTime;
+        if (counter <= 0){
+            counter = 1;
+            for (int i = 0; i < enemiesInRange.Count; i++){
+                enemiesInRange[i].TakeDamage(weapon.damage);
+            }
+        }
+    } 
+
+    private void OnTriggerEnter2D(Collider2D collider){
+        if (collider.CompareTag("Enemy")){
+            enemiesInRange.Add(collider.GetComponent<Enemy>());
+        }
     }
 
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        if (collider.CompareTag("Enemy"))
-        {
-            Enemy enemy = collider.GetComponent<Enemy>();
-            enemy.TakeDamage(weapon.damage); 
+    private void OnTriggerExit2D(Collider2D collider){
+        if (collider.CompareTag("Enemy")){
+            enemiesInRange.Remove(collider.GetComponent<Enemy>());
         }
     }
 }
