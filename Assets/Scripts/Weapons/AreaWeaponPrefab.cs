@@ -40,7 +40,7 @@ public class AreaWeaponPrefab : MonoBehaviour
         // periodic damage
         counter -= Time.deltaTime;
         if (counter <= 0){
-            counter = 1;
+            counter = weapon.speed;
             for (int i = 0; i < enemiesInRange.Count; i++){
                 enemiesInRange[i].TakeDamage(weapon.damage);
             }
