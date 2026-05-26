@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class PlayerController : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     public int experience;
+    public int currentLevel;
+    public int maxLevel;
+    public List<int> playerLevels; 
 
     private bool immune;
     [SerializeField] private float immunityDuration;
@@ -30,6 +34,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        for (int i = playerLevels.Count; i < maxLevel; i++)
+        {
+            playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
+        }
+        
         currentHealth = maxHealth;
         UIController.Instance.UpdateHealthSlider();
     }
