@@ -288,5 +288,6 @@ MonoBehaviour:
   rigidBody: {fileID: 815399751465989363}
   moveSpeed: 1.5
   damage: 1
-  health: 75
+  health: 5
   enemyDeathEffect: {fileID: 2681898949079663030, guid: 803c5f37f3f45a484ad95643cf13f5e1, type: 3}
+  experienceToGive: 2

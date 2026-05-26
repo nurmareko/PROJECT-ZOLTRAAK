@@ -8,9 +8,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 2.5f;
-    [SerializeField] public Vector2 playerMoveDirection;
-    [SerializeField] public float maxHealth;
-    [SerializeField] public float currentHealth;
+    public Vector2 playerMoveDirection;
+    public float maxHealth;
+    public float currentHealth;
+    public int experience;
 
     private bool immune;
     [SerializeField] private float immunityDuration;
@@ -79,5 +80,10 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.GameOver();
             }
         }
+    }
+
+    public void GetExperience(int experienceToGet)
+    {
+        experience += experienceToGet;
     }
 }

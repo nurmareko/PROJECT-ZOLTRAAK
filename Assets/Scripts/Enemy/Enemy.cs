@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float health;
     [SerializeField] private GameObject enemyDeathEffect;
+    [SerializeField] private int experienceToGive;
     private Vector2 direction;
 
     void FixedUpdate()
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
+            PlayerController.Instance.GetExperience(experienceToGive);
         }
     }
 }

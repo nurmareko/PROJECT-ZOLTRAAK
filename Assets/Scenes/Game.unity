@@ -314,6 +314,7 @@ MonoBehaviour:
   playerMoveDirection: {x: 0, y: 0}
   maxHealth: 3
   currentHealth: 3
+  experience: 0
   immunityDuration: 2
   immunityTimer: 0
 --- !u!70 &170322457
@@ -2782,7 +2783,8 @@ MonoBehaviour:
   cooldown: 5
   duration: 3
   damage: 1
-  range: 1
+  range: 1.5
+  speed: 0.5
 --- !u!1 &1457751339
 GameObject:
   m_ObjectHideFlags: 0

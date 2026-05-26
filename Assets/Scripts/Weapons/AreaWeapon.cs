@@ -7,7 +7,7 @@ public class AreaWeapon : MonoBehaviour
     public float cooldown = 5f;
     public float duration = 3f;
     public float damage = 1f;
-    public float range = 1f;
+    public float range = 2f;
     public float speed = 0.5f;
 
     // Update is called once per frame

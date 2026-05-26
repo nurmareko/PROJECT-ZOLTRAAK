@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6716234238592534069}
   - component: {fileID: 7608778189621250315}
   - component: {fileID: -3540119257750256241}
+  - component: {fileID: 8179924119543031246}
   m_Layer: 0
   m_Name: Area Weapon
   m_TagString: Untagged
@@ -142,3 +143,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaWeaponPrefab
   weapon: {fileID: 0}
+  enemiesInRange: []
+--- !u!95 &8179924119543031246
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128959240006071220}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f296ac6c544ced79084156eb05c9bd35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
