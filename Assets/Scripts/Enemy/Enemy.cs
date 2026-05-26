@@ -11,17 +11,37 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private int experienceToGive;
+    [SerializeField] private float pushTime;
+
+    private float pushCounter;  
     private Vector2 direction;
 
     void FixedUpdate()
     {
         if (PlayerController.Instance.gameObject.activeSelf)
         {
+            // Face the player
             float playerX = PlayerController.Instance.transform.position.x;
             float enemyX = gameObject.transform.position.x;
             bool isPlayerOnRight = playerX > enemyX;
             spriteRenderer.flipX = isPlayerOnRight;
 
+            // Push back enemy
+            if (pushCounter > 0)
+            {
+                pushCounter -= Time.deltaTime;
+                if (moveSpeed > 0)
+                {
+                    moveSpeed = -moveSpeed;
+                }
+
+                if (pushCounter <= 0)
+                {
+                    moveSpeed = Mathf.Abs(moveSpeed);
+                }
+            }
+
+            // Move toward player
             Vector2 playerPosn = PlayerController.Instance.transform.position;
             direction = (playerPosn - (Vector2) transform.position).normalized;
 
@@ -47,6 +67,8 @@ public class Enemy : MonoBehaviour
     {
         health -= damage;
         DamageNumberController.Instance.CreateNumber(damage, transform.position);
+
+        pushCounter = pushTime; 
 
         if(health <= 0)
         {

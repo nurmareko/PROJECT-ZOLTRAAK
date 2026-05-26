@@ -179,6 +179,7 @@ MonoBehaviour:
   health: 3
   enemyDeathEffect: {fileID: 6206075682055354637, guid: fd33486bbf271f6cd8916cc8681b3514, type: 3}
   experienceToGive: 1
+  pushTime: 0.3
 --- !u!95 &7998344866492696640
 Animator:
   serializedVersion: 7
