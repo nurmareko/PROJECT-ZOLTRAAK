@@ -14,6 +14,8 @@ public class UIController : MonoBehaviour
     public GameObject levelUpPanel;
     public GameObject PausePanel;
 
+    public LevelUpButton[] levelUpButtons; 
+
     void Awake()
     {
         if (Instance == null)
