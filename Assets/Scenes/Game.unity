@@ -312,7 +312,7 @@ MonoBehaviour:
   animator: {fileID: 170322454}
   moveSpeed: 2.6
   playerMoveDirection: {x: 0, y: 0}
-  maxHealth: 3
+  maxHealth: 5
   currentHealth: 5
   experience: 0
   currentLevel: 1
