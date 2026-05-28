@@ -108,5 +108,6 @@ public class PlayerController : MonoBehaviour
         experience -= playerLevels[currentLevel - 1];
         currentLevel++;
         UIController.Instance.UpdateExperienceSlider();
+        UIController.Instance.LevelUpPanelOpen();
     }
 }
