@@ -315,7 +315,7 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 3
   experience: 0
-  currentLevel: 0
+  currentLevel: 1
   maxLevel: 10
   playerLevels: 0a000000140000001e000000
   immunityDuration: 2
@@ -14976,6 +14976,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIController
   playerHealthSlider: {fileID: 1570574679}
   healthText: {fileID: 2041270282}
+  playerExperienceSlider: {fileID: 775621073}
+  experienceText: {fileID: 2025899423}
   timerText: {fileID: 776398048}
   gameoverPanel: {fileID: 1564389340}
   PausePanel: {fileID: 1363818301}

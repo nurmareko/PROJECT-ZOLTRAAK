@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public int experience;
     public int currentLevel;
     public int maxLevel;
-    public List<int> playerLevels; 
+    public List<int> playerLevels;
 
     private bool immune;
     [SerializeField] private float immunityDuration;
@@ -38,9 +38,10 @@ public class PlayerController : MonoBehaviour
         {
             playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
         }
-        
+
         currentHealth = maxHealth;
         UIController.Instance.UpdateHealthSlider();
+        UIController.Instance.UpdateExperienceSlider();
     }
 
     // Update is called once per frame
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
             if (currentHealth <= 0)
             {
-                gameObject.SetActive(false);  
+                gameObject.SetActive(false);
                 GameManager.Instance.GameOver();
             }
         }
@@ -94,5 +95,6 @@ public class PlayerController : MonoBehaviour
     public void GetExperience(int experienceToGet)
     {
         experience += experienceToGet;
+        UIController.Instance.UpdateExperienceSlider();
     }
 }
