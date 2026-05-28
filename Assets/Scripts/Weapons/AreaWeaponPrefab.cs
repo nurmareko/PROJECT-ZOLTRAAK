@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaWeaponPrefab : MonoBehaviour
@@ -14,9 +14,9 @@ public class AreaWeaponPrefab : MonoBehaviour
     void Start()
     {
         weapon = GameObject.Find("Area Weapon").GetComponent<AreaWeapon>();
-        targetSize = Vector3.one * weapon.range;
+        targetSize = Vector3.one * weapon.stats[weapon.weaponLevel].range;
         transform.localScale = Vector3.zero;
-        timer = weapon.duration;
+        timer = weapon.stats[weapon.weaponLevel].duration;
     }
 
     // Update is called once per frame
@@ -40,12 +40,12 @@ public class AreaWeaponPrefab : MonoBehaviour
         // periodic damage
         counter -= Time.deltaTime;
         if (counter <= 0){
-            counter = weapon.speed;
+            counter = weapon.stats[weapon.weaponLevel].speed;
             for (int i = 0; i < enemiesInRange.Count; i++){
-                enemiesInRange[i].TakeDamage(weapon.damage);
+                enemiesInRange[i].TakeDamage(weapon.stats[weapon.weaponLevel].damage);
             }
-        }
-    } 
+        } 
+    }
 
     private void OnTriggerEnter2D(Collider2D collider){
         if (collider.CompareTag("Enemy")){
