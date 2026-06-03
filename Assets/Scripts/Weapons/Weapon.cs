@@ -6,6 +6,11 @@ public class Weapon : MonoBehaviour
     public int weaponLevel;
     public List<WeaponStat> stats;
     public Sprite weaponImage;
+
+    public void LevelUp()
+    {
+        weaponLevel++;
+    }
 }
 
 [System.Serializable]

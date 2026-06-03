@@ -3505,19 +3505,19 @@ MonoBehaviour:
     damage: 1
     range: 1.5
     speed: 0.5
-    description: level 1 desc
+    description: upgrade 1 desc
   - cooldown: 5
     duration: 3
     damage: 1
     range: 1.7
     speed: 0.7
-    description: level 2 desc
+    description: upgrade 2 desc
   - cooldown: 5
     duration: 3
     damage: 1.5
     range: 2
     speed: 0.8
-    description: level 3 desc
+    description: upgrade 3 desc
   weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
   prefab: {fileID: 2128959240006071220, guid: 0fd43efa09888ea3b94635c5510cfded, type: 3}
 --- !u!1 &1442212239
@@ -89573,7 +89573,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1999910480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1999910482}
+        m_TargetAssemblyTypeName: LevelUpButton, Assembly-CSharp
+        m_MethodName: SelectUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1999910480
 MonoBehaviour:
   m_ObjectHideFlags: 0
