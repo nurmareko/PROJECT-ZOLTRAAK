@@ -9,7 +9,10 @@ public class Weapon : MonoBehaviour
 
     public void LevelUp()
     {
-        weaponLevel++;
+        if (weaponLevel < stats.Count - 1)
+        {
+            weaponLevel++;
+        }
     }
 }
 
