@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int experienceToGive;
     [SerializeField] private float pushTime;
 
-    private float pushCounter;  
+    private float pushCounter;
     private Vector2 direction;
 
     void FixedUpdate()
@@ -68,13 +68,14 @@ public class Enemy : MonoBehaviour
         health -= damage;
         DamageNumberController.Instance.CreateNumber(damage, transform.position);
 
-        pushCounter = pushTime; 
+        pushCounter = pushTime;
 
         if(health <= 0)
         {
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
             PlayerController.Instance.GetExperience(experienceToGive);
+            AudioController.Instance.PlaySound(AudioController.Instance.enemyDie);
         }
     }
 }

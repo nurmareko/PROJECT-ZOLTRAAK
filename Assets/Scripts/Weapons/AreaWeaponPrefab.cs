@@ -17,6 +17,7 @@ public class AreaWeaponPrefab : MonoBehaviour
         targetSize = Vector3.one * weapon.stats[weapon.weaponLevel].range;
         transform.localScale = Vector3.zero;
         timer = weapon.stats[weapon.weaponLevel].duration;
+        AudioController.Instance.PlaySound(AudioController.Instance.areaWeaponSpawn);
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class AreaWeaponPrefab : MonoBehaviour
         if (timer <= 0)
         {
             targetSize = Vector3.zero;
-            if (transform.localScale.x == 0f)
+              if (transform.localScale.x == 0f)
             {
                 Destroy(gameObject);
             }
@@ -44,7 +45,7 @@ public class AreaWeaponPrefab : MonoBehaviour
             for (int i = 0; i < enemiesInRange.Count; i++){
                 enemiesInRange[i].TakeDamage(weapon.stats[weapon.weaponLevel].damage);
             }
-        } 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider){
