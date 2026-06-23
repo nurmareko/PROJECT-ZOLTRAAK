@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public float gameTime;
-    private bool gameActive; 
+    private bool gameActive;
 
     void Awake()
     {
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
             {
                 Pause();
-            }   
+            }
         }
     }
 
@@ -47,12 +47,12 @@ public class GameManager : MonoBehaviour
     IEnumerator showGameOverScreen()
     {
         yield return new WaitForSeconds(1.5f);
-        UIController.Instance.gameoverPanel.SetActive(true); 
+        UIController.Instance.gameoverPanel.SetActive(true);
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene("Game"); 
+        SceneManager.LoadScene("Game");
     }
 
      public void Pause()
@@ -66,16 +66,17 @@ public class GameManager : MonoBehaviour
             UIController.Instance.PausePanel.SetActive(false);
             Time.timeScale = 1f;
         }
-        
+
     }
 
     public void QuitGame()
     {
-        Application.Quit(); 
+        Application.Quit();
     }
 
     public void MainMenu()
     {
         SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1f;
     }
 }
