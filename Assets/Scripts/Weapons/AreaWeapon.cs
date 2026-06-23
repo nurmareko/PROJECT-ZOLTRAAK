@@ -12,7 +12,13 @@ public class AreaWeapon : Weapon
         if (spawnCounter <= 0)
         {
             spawnCounter = stats[weaponLevel].cooldown;
-            Instantiate(prefab, transform.position, transform.rotation, transform);
+            GameObject spawnedWeapon = Instantiate(prefab, transform.position, transform.rotation, transform);
+            AreaWeaponPrefab weaponPrefab = spawnedWeapon.GetComponent<AreaWeaponPrefab>();
+
+            if (weaponPrefab != null)
+            {
+                weaponPrefab.weapon = this;
+            }
         }
     }
 }

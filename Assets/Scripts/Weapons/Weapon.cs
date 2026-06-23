@@ -21,6 +21,7 @@ public class WeaponStat
 {
     public float cooldown;
     public float duration;
+    public int amount = 1;
     public float damage;
     public float range;
     public float speed;

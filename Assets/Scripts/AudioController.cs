@@ -25,11 +25,21 @@ public class AudioController : MonoBehaviour
     }
 
     public void PlaySound(AudioSource sound){
+        if (sound == null)
+        {
+            return;
+        }
+
         sound.Stop();
         sound.Play();
     }
 
     public void PlayModifiedSound(AudioSource sound){
+        if (sound == null)
+        {
+            return;
+        }
+
         sound.pitch = Random.Range(0.7f, 1.3f);
         sound.Stop();
         sound.Play();

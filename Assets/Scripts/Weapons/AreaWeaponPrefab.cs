@@ -1,4 +1,4 @@
- using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaWeaponPrefab : MonoBehaviour
@@ -13,7 +13,17 @@ public class AreaWeaponPrefab : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        weapon = GameObject.Find("Area Weapon").GetComponent<AreaWeapon>();
+        if (weapon == null)
+        {
+            weapon = GetComponentInParent<AreaWeapon>();
+        }
+
+        if (weapon == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         targetSize = Vector3.one * weapon.stats[weapon.weaponLevel].range;
         transform.localScale = Vector3.zero;
         timer = weapon.stats[weapon.weaponLevel].duration;

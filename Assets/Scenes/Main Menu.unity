@@ -366,7 +366,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 344656974}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
+        m_MethodName: NewGameAsCharacterC
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -817,6 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6657f209d707a7088c6010c4b29d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
+  gameSceneName: Game
 --- !u!1 &855131983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1711,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 344656974}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
+        m_MethodName: NewGameAsCharacterA
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1866,7 +1867,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 344656974}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
+        m_MethodName: NewGameAsCharacterB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
