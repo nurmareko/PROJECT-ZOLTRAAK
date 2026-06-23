@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float healthUpgradeAmount = 1f;
+    [SerializeField] private float agilityUpgradeAmount = 0.25f;
     [SerializeField] private int characterIndex;
     [SerializeField] private GameObject[] characterPrefabs;
     [SerializeField] private List<CharacterLoadout> characterLoadouts = new List<CharacterLoadout>();
@@ -171,7 +173,35 @@ public class PlayerController : MonoBehaviour
         currentLevel++;
         UIController.Instance.UpdateExperienceSlider();
         UIController.Instance.LevelUpPanelOpen();
-        UIController.Instance.levelUpButtons[0].ActivateButton(activeWeapon);
+        UIController.Instance.ActivateLevelUpButtons(activeWeapon);
+    }
+
+    public void UpgradeHealth()
+    {
+        maxHealth += healthUpgradeAmount;
+        currentHealth = Mathf.Min(currentHealth + healthUpgradeAmount, maxHealth);
+        UIController.Instance.UpdateHealthSlider();
+    }
+
+    public void UpgradeAgility()
+    {
+        moveSpeed += agilityUpgradeAmount;
+    }
+
+    public string GetHealthUpgradeDescription()
+    {
+        return "Increase max health by " + FormatUpgradeValue(healthUpgradeAmount) +
+            " and heal for the same amount.";
+    }
+
+    public string GetAgilityUpgradeDescription()
+    {
+        return "Increase movement speed by " + FormatUpgradeValue(agilityUpgradeAmount) + ".";
+    }
+
+    private string FormatUpgradeValue(float value)
+    {
+        return value.ToString("0.##");
     }
 
     private void ApplySelectedCharacter()

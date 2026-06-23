@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,21 +9,62 @@ public class LevelUpButton : MonoBehaviour
     public TMP_Text weaponDescription;
     public Image weaponIcon;
 
-    private Weapon assignedWeapon;
+    private Action assignedUpgrade;
 
     public void ActivateButton(Weapon weapon)
     {
-        weaponName.text = weapon.name;
-        weaponDescription.text = weapon.stats[weapon.weaponLevel].description;
-        weaponIcon.sprite = weapon.weaponImage;
+        if (weapon == null)
+        {
+            ActivateButton("Upgrade", "No weapon available.", null, null);
+            return;
+        }
 
-        assignedWeapon = weapon;
+        weaponName.text = weapon.name;
+        weaponDescription.text = GetWeaponDescription(weapon);
+        SetIcon(weapon.weaponImage);
+
+        assignedUpgrade = weapon.LevelUp;
+    }
+
+    public void ActivateButton(string upgradeName, string upgradeDescription, Sprite upgradeIcon, Action upgradeAction)
+    {
+        weaponName.text = upgradeName;
+        weaponDescription.text = upgradeDescription;
+        SetIcon(upgradeIcon);
+
+        assignedUpgrade = upgradeAction;
     }
 
     public void SelectUpgrade()
     {
-        assignedWeapon.LevelUp();
+        assignedUpgrade?.Invoke();
         UIController.Instance.LevelUpPanelClose();
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
+    }
+
+    private string GetWeaponDescription(Weapon weapon)
+    {
+        if (weapon.stats == null || weapon.stats.Count == 0)
+        {
+            return "Improve this weapon.";
+        }
+
+        if (weapon.weaponLevel >= weapon.stats.Count - 1)
+        {
+            return "This weapon is already at max level.";
+        }
+
+        return weapon.stats[weapon.weaponLevel + 1].description;
+    }
+
+    private void SetIcon(Sprite sprite)
+    {
+        if (weaponIcon == null)
+        {
+            return;
+        }
+
+        weaponIcon.sprite = sprite;
+        weaponIcon.enabled = sprite != null;
     }
 }
