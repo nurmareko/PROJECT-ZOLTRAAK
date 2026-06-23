@@ -697,6 +697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   rigidBody: {fileID: 170322455}
   animator: {fileID: 170322454}
+  spriteRenderer: {fileID: 170322452}
   moveSpeed: 2.6
   playerMoveDirection: {x: 0, y: 0}
   maxHealth: 5

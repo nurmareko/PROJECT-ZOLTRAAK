@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float moveSpeed = 2.5f;
     public Vector2 playerMoveDirection;
     public float maxHealth;
@@ -53,6 +54,11 @@ public class PlayerController : MonoBehaviour
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
         playerMoveDirection = new Vector2(inputX, inputY).normalized;
+
+        if (inputX != 0)
+        {
+            spriteRenderer.flipX = inputX < 0;
+        }
 
         // Trigger animation state
         animator.SetFloat("Move X", inputX);
