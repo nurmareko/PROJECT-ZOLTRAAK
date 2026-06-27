@@ -135,15 +135,18 @@ MonoBehaviour:
   animator: {fileID: 6329713244309819150}
   spriteRenderer: {fileID: 2562826436135036078}
   moveSpeed: 2.6
+  healthUpgradeAmount: 1
+  agilityUpgradeAmount: 0.25
   characterIndex: 1
   characterPrefabs:
   - {fileID: 841176586615057375, guid: f732be723d24bafe49618e28b5947e6c, type: 3}
-  - {fileID: 841176586615057375, guid: 99c6b3c7aa3890cb9bb6ae74e03e566f, type: 3}
+  - {fileID: 841176586615057375}
   - {fileID: 841176586615057375, guid: 88b00a92bc453a2939283084c26c79eb, type: 3}
   characterLoadouts: []
   playerMoveDirection: {x: 0, y: 0}
-  maxHealth: 5
-  currentHealth: 5
+  lastMoveDirection: {x: 0, y: -1}
+  maxHealth: 8
+  currentHealth: 8
   experience: 0
   currentLevel: 1
   maxLevel: 10
@@ -264,24 +267,59 @@ MonoBehaviour:
   - cooldown: 1.5
     duration: 2
     amount: 1
-    damage: 1
+    damage: 3
     range: 0
     speed: 6
-    description: Fires a shot in the last movement direction.
+    description: Fires a heavy shot in the last movement direction.
   - cooldown: 1.25
     duration: 2
     amount: 2
-    damage: 1
+    damage: 3.5
     range: 0
     speed: 6.5
-    description: Fires two faster directional shots.
+    description: Adds a heavy shot in the opposite direction.
   - cooldown: 1
     duration: 2.5
     amount: 3
-    damage: 1.25
+    damage: 4
     range: 0
     speed: 7
-    description: Fires three strong directional shots.
+    description: Adds a heavy upward shot.
+  - cooldown: 0.9
+    duration: 2.5
+    amount: 4
+    damage: 4.5
+    range: 0
+    speed: 7.25
+    description: Adds a heavy downward shot.
+  - cooldown: 0.85
+    duration: 2.75
+    amount: 5
+    damage: 5
+    range: 0
+    speed: 7.5
+    description: Adds a heavy upper-right diagonal shot.
+  - cooldown: 0.8
+    duration: 2.75
+    amount: 6
+    damage: 5.5
+    range: 0
+    speed: 7.75
+    description: Adds a heavy upper-left diagonal shot.
+  - cooldown: 0.75
+    duration: 3
+    amount: 7
+    damage: 6
+    range: 0
+    speed: 8
+    description: Adds a heavy lower-right diagonal shot.
+  - cooldown: 0.7
+    duration: 3
+    amount: 8
+    damage: 6.5
+    range: 0
+    speed: 8.25
+    description: Adds a heavy lower-left diagonal shot.
   weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
   prefab: {fileID: 3311000000000000001, guid: ec09671c8ffa4a20a78a80f653c72aaf, type: 3}
 --- !u!1 &4176540997659601318

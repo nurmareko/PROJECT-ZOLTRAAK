@@ -267,21 +267,21 @@ MonoBehaviour:
     damage: 1
     range: 1.6
     speed: 1
-    description: Summons two orbiting weapons.
+    description: Summons twin counter-spinning blades that shove enemies aside.
   - cooldown: 4.5
     duration: 3.5
     amount: 3
     damage: 1.25
     range: 1.8
     speed: 1.2
-    description: Summons three wider orbiting weapons.
+    description: Adds a wider blade pattern with stronger spiral control.
   - cooldown: 4
     duration: 4
     amount: 4
     damage: 1.5
     range: 2
     speed: 1.4
-    description: Summons four fast orbiting weapons.
+    description: Unleashes four fast guard blades that carve and scatter crowds.
   weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
   prefab: {fileID: 3322000000000000001, guid: d5fade07032e46b7b0366211348b64d5, type: 3}
 --- !u!1 &4176540997659601318

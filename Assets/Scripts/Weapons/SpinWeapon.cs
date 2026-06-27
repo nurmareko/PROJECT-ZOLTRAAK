@@ -19,7 +19,8 @@ public class SpinWeapon : Weapon
                 {
                     weaponPrefab.weapon = this;
                     float rotation = 360f / stats[weaponLevel].amount * i;
-                    weaponPrefab.SetRotationOffset(rotation);
+                    float spinDirection = i % 2 == 0 ? 1f : -1f;
+                    weaponPrefab.SetRotationOffset(rotation, spinDirection);
                 }
             }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private const int DefaultFirstLevelExperience = 10;
+
     public static PlayerController Instance;
 
     [System.Serializable]
@@ -87,11 +89,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         ApplySelectedCharacter();
-
-        for (int i = playerLevels.Count; i < maxLevel; i++)
-        {
-            playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
-        }
+        EnsurePlayerLevels();
 
         currentHealth = maxHealth;
         UIController.Instance.UpdateHealthSlider();
@@ -169,19 +167,52 @@ public class PlayerController : MonoBehaviour
 
     public void GetExperience(int experienceToGet)
     {
-        experience += experienceToGet;
-        UIController.Instance.UpdateExperienceSlider();
+        if (experienceToGet <= 0)
+        {
+            return;
+        }
 
-        if (experience >= playerLevels[currentLevel - 1])
+        EnsurePlayerLevels();
+
+        if (IsAtMaxLevel())
+        {
+            experience = 0;
+            UIController.Instance.UpdateExperienceSlider();
+            return;
+        }
+
+        experience += experienceToGet;
+
+        if (experience >= GetCurrentExperienceRequirement())
         {
             LevelUp();
+            return;
         }
+
+        UIController.Instance.UpdateExperienceSlider();
     }
 
     public void LevelUp()
     {
-        experience -= playerLevels[currentLevel - 1];
+        EnsurePlayerLevels();
+
+        if (IsAtMaxLevel())
+        {
+            experience = 0;
+            UIController.Instance.UpdateExperienceSlider();
+            return;
+        }
+
+        experience -= GetCurrentExperienceRequirement();
         currentLevel++;
+
+        if (IsAtMaxLevel())
+        {
+            experience = 0;
+            UIController.Instance.UpdateExperienceSlider();
+            return;
+        }
+
         UIController.Instance.UpdateExperienceSlider();
         UIController.Instance.LevelUpPanelOpen();
         UIController.Instance.ActivateLevelUpButtons(activeWeapon);
@@ -210,9 +241,49 @@ public class PlayerController : MonoBehaviour
         return "Increase movement speed by " + FormatUpgradeValue(agilityUpgradeAmount) + ".";
     }
 
+    public int GetCurrentExperienceRequirement()
+    {
+        EnsurePlayerLevels();
+
+        int levelIndex = Mathf.Clamp(currentLevel - 1, 0, playerLevels.Count - 1);
+        return playerLevels[levelIndex];
+    }
+
+    public bool IsAtMaxLevel()
+    {
+        EnsurePlayerLevels();
+
+        return currentLevel >= maxLevel;
+    }
+
     private string FormatUpgradeValue(float value)
     {
         return value.ToString("0.##");
+    }
+
+    private void EnsurePlayerLevels()
+    {
+        if (maxLevel < 1)
+        {
+            maxLevel = 1;
+        }
+
+        currentLevel = Mathf.Clamp(currentLevel, 1, maxLevel);
+
+        if (playerLevels == null)
+        {
+            playerLevels = new List<int>();
+        }
+
+        if (playerLevels.Count == 0)
+        {
+            playerLevels.Add(DefaultFirstLevelExperience);
+        }
+
+        for (int i = playerLevels.Count; i < maxLevel; i++)
+        {
+            playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
+        }
     }
 
     private void ApplySelectedCharacter()

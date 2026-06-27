@@ -4,8 +4,16 @@ public class DirectionalWeaponPrefab : MonoBehaviour
 {
     public DirectionalWeapon weapon;
     private Rigidbody2D rb;
-    private Vector3 direction;
+    private Vector2 direction;
     private float duration;
+    private bool hasDirection;
+
+    public void Initialize(DirectionalWeapon owner, Vector2 fireDirection)
+    {
+        weapon = owner;
+        direction = fireDirection.normalized;
+        hasDirection = true;
+    }
 
     void Start()
     {
@@ -20,12 +28,19 @@ public class DirectionalWeaponPrefab : MonoBehaviour
             return;
         }
 
-        direction = PlayerController.Instance.lastMoveDirection;
+        if (!hasDirection)
+        {
+            direction = PlayerController.Instance.lastMoveDirection.normalized;
+        }
+
+        if (direction.sqrMagnitude <= 0.001f)
+        {
+            direction = Vector2.right;
+        }
+
         duration = weapon.stats[weapon.weaponLevel].duration;
         rb = GetComponent<Rigidbody2D>();
-        float randomAngle = Random.Range(-0.2f, 0.2f);
-        rb.linearVelocity = new Vector3(
-            direction.x * weapon.stats[weapon.weaponLevel].speed + randomAngle, direction.y * weapon.stats[weapon.weaponLevel].speed + randomAngle);
+        rb.linearVelocity = direction * weapon.stats[weapon.weaponLevel].speed;
         //Destroy(gameObject, weapon.stats[weapon.weaponLevel].duration);
         AudioController.Instance.PlaySound(AudioController.Instance.directionalWeaponSpawn);
     }

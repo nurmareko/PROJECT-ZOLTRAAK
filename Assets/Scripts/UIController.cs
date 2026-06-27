@@ -43,9 +43,14 @@ public class UIController : MonoBehaviour
 
     public void UpdateExperienceSlider()
     {
-         playerExperienceSlider.maxValue = PlayerController.Instance.playerLevels[PlayerController.Instance.currentLevel - 1];
-         playerExperienceSlider.value = PlayerController.Instance.experience ;
-         experienceText.text = playerExperienceSlider.value + " / " + playerExperienceSlider.maxValue;
+         PlayerController player = PlayerController.Instance;
+         int experienceRequirement = player.GetCurrentExperienceRequirement();
+
+         playerExperienceSlider.maxValue = experienceRequirement;
+         playerExperienceSlider.value = Mathf.Min(player.experience, experienceRequirement);
+         experienceText.text = player.IsAtMaxLevel()
+            ? "MAX"
+            : playerExperienceSlider.value + " / " + playerExperienceSlider.maxValue;
     }
 
     public void UpdateTimer(float timer)
