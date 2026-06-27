@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
+        UIController.Instance.UpdateLevelText();
     }
 
     // Update is called once per frame
@@ -205,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
         experience -= GetCurrentExperienceRequirement();
         currentLevel++;
+        UIController.Instance.UpdateLevelText();
 
         if (IsAtMaxLevel())
         {

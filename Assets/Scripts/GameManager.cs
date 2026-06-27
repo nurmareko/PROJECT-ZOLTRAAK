@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1f;
         gameActive = true;
     }
 
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Game");
     }
 

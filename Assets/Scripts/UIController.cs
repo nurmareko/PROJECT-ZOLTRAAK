@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Slider playerExperienceSlider;
     [SerializeField] private TMP_Text experienceText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text survivedTimeText;
     public GameObject gameoverPanel;
@@ -51,6 +52,16 @@ public class UIController : MonoBehaviour
          experienceText.text = player.IsAtMaxLevel()
             ? "MAX"
             : playerExperienceSlider.value + " / " + playerExperienceSlider.maxValue;
+    }
+
+    public void UpdateLevelText()
+    {
+        EnsureLevelText();
+
+        if (levelText != null)
+        {
+            levelText.text = "Level " + PlayerController.Instance.currentLevel;
+        }
     }
 
     public void UpdateTimer(float timer)
@@ -129,6 +140,34 @@ public class UIController : MonoBehaviour
         }
 
         ArrangeLevelUpButtons();
+    }
+
+    private void EnsureLevelText()
+    {
+        if (levelText != null || timerText == null)
+        {
+            return;
+        }
+
+        GameObject textObject = new GameObject("Level Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        textObject.transform.SetParent(timerText.transform.parent, false);
+
+        RectTransform textTransform = textObject.GetComponent<RectTransform>();
+        textTransform.anchorMin = new Vector2(0.5f, 1f);
+        textTransform.anchorMax = new Vector2(0.5f, 1f);
+        textTransform.anchoredPosition = new Vector2(0f, -140f);
+        textTransform.sizeDelta = new Vector2(260f, 54f);
+        textTransform.pivot = new Vector2(0.5f, 0.5f);
+
+        levelText = textObject.GetComponent<TMP_Text>();
+        levelText.alignment = TextAlignmentOptions.Center;
+        levelText.enableAutoSizing = true;
+        levelText.fontSizeMin = 18f;
+        levelText.fontSizeMax = 40f;
+        levelText.raycastTarget = false;
+        levelText.font = timerText.font;
+        levelText.fontSharedMaterial = timerText.fontSharedMaterial;
+        levelText.color = timerText.color;
     }
 
     private void ArrangeLevelUpButtons()
