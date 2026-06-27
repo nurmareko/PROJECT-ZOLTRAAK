@@ -156,6 +156,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Heal(float healAmount)
+    {
+        if (healAmount <= 0 || currentHealth <= 0)
+        {
+            return;
+        }
+
+        currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+        UIController.Instance.UpdateHealthSlider();
+    }
+
     public void GetExperience(int experienceToGet)
     {
         experience += experienceToGet;

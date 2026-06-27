@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     IEnumerator showGameOverScreen()
     {
         yield return new WaitForSeconds(1.5f);
-        UIController.Instance.gameoverPanel.SetActive(true);
+        UIController.Instance.ShowGameOver(gameTime);
         AudioController.Instance.PlaySound(AudioController.Instance.gameOver);
     }
 

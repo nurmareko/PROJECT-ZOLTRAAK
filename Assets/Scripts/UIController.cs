@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Slider playerExperienceSlider;
     [SerializeField] private TMP_Text experienceText;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text survivedTimeText;
     public GameObject gameoverPanel;
     public GameObject levelUpPanel;
     public GameObject PausePanel;
@@ -49,10 +50,13 @@ public class UIController : MonoBehaviour
 
     public void UpdateTimer(float timer)
     {
-        float minute = Mathf.FloorToInt(timer / 60f);
-        float second = Mathf.FloorToInt(timer % 60f);
+        timerText.text = FormatTime(timer);
+    }
 
-        timerText.text = minute + ":" + second.ToString("00");
+    public void ShowGameOver(float survivedTime)
+    {
+        UpdateSurvivedTime(survivedTime);
+        gameoverPanel.SetActive(true);
     }
 
     public void LevelUpPanelOpen()
@@ -144,5 +148,72 @@ public class UIController : MonoBehaviour
             position.x = (i - centerOffset) * LevelUpButtonSpacing;
             buttonTransform.anchoredPosition = position;
         }
+    }
+
+    private void UpdateSurvivedTime(float survivedTime)
+    {
+        EnsureSurvivedTimeText();
+
+        if (survivedTimeText != null)
+        {
+            survivedTimeText.text = "Survived: " + FormatTime(survivedTime);
+        }
+    }
+
+    private void EnsureSurvivedTimeText()
+    {
+        if (survivedTimeText != null || gameoverPanel == null)
+        {
+            return;
+        }
+
+        TMP_Text[] gameOverTexts = gameoverPanel.GetComponentsInChildren<TMP_Text>(true);
+        TMP_Text titleText = null;
+
+        foreach (TMP_Text gameOverText in gameOverTexts)
+        {
+            if (gameOverText.name == "Survived Time Text")
+            {
+                survivedTimeText = gameOverText;
+                return;
+            }
+
+            if (gameOverText.name == "Title")
+            {
+                titleText = gameOverText;
+            }
+        }
+
+        GameObject textObject = new GameObject("Survived Time Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        textObject.transform.SetParent(gameoverPanel.transform, false);
+
+        RectTransform textTransform = textObject.GetComponent<RectTransform>();
+        textTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        textTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        textTransform.anchoredPosition = new Vector2(0f, 58f);
+        textTransform.sizeDelta = new Vector2(520f, 44f);
+        textTransform.pivot = new Vector2(0.5f, 0.5f);
+
+        survivedTimeText = textObject.GetComponent<TMP_Text>();
+        survivedTimeText.alignment = TextAlignmentOptions.Center;
+        survivedTimeText.enableAutoSizing = true;
+        survivedTimeText.fontSizeMin = 18f;
+        survivedTimeText.fontSizeMax = 36f;
+        survivedTimeText.raycastTarget = false;
+
+        if (titleText != null)
+        {
+            survivedTimeText.font = titleText.font;
+            survivedTimeText.fontSharedMaterial = titleText.fontSharedMaterial;
+            survivedTimeText.color = titleText.color;
+        }
+    }
+
+    private string FormatTime(float timer)
+    {
+        int minute = Mathf.FloorToInt(timer / 60f);
+        int second = Mathf.FloorToInt(timer % 60f);
+
+        return minute + ":" + second.ToString("00");
     }
 }
