@@ -22,61 +22,97 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waves[waveNumber].spawnTimer += Time.deltaTime;
-        if (waves[waveNumber].spawnTimer >= waves[waveNumber].spawnInterval)
+        if (waves == null || waves.Count == 0)
         {
-            waves[waveNumber].spawnTimer = 0;
-            SpawnEnemy();
+            return;
         }
-        if (waves[waveNumber].spawnedEnemyCount >= waves[waveNumber].enemiesPerWave)
-        {
-            waves[waveNumber].spawnedEnemyCount = 0;
 
-            if (waves[waveNumber].spawnInterval > 0.3f)
+        if (waveNumber < 0 || waveNumber >= waves.Count)
+        {
+            waveNumber = 0;
+        }
+
+        Wave currentWave = waves[waveNumber];
+
+        if (currentWave == null ||
+            currentWave.enemyPrefab == null ||
+            currentWave.enemiesPerWave <= 0 ||
+            currentWave.spawnInterval <= 0f)
+        {
+            AdvanceWave();
+            return;
+        }
+
+        currentWave.spawnTimer += Time.deltaTime;
+        if (currentWave.spawnTimer >= currentWave.spawnInterval)
+        {
+            currentWave.spawnTimer = 0;
+            SpawnEnemy(currentWave);
+        }
+
+        if (currentWave.spawnedEnemyCount >= currentWave.enemiesPerWave)
+        {
+            currentWave.spawnedEnemyCount = 0;
+
+            if (currentWave.spawnInterval > 0.3f)
             {
-                waves[waveNumber].spawnInterval *= 0.9f;
+                currentWave.spawnInterval *= 0.9f;
             }
 
-            waveNumber++;
+            AdvanceWave();
         }
+    }
+
+    private void SpawnEnemy(Wave wave)
+    {
+        Instantiate(wave.enemyPrefab, RandomSpawnPoint(), transform.rotation);
+        wave.spawnedEnemyCount++;
+    }
+
+    private void AdvanceWave()
+    {
+        waveNumber++;
         if (waveNumber >= waves.Count)
         {
             waveNumber = 0;
         }
     }
 
-    private void SpawnEnemy()
-    {
-        Instantiate(waves[waveNumber].enemyPrefab, RandomSpawnPoint(), transform.rotation);
-        waves[waveNumber].spawnedEnemyCount++;
-    }
-
     private Vector2 RandomSpawnPoint()
     {
+        if (minPosn == null || maxPosn == null)
+        {
+            return transform.position;
+        }
+
         Vector2 spawnPoint;
+        float minX = Mathf.Min(minPosn.position.x, maxPosn.position.x);
+        float maxX = Mathf.Max(minPosn.position.x, maxPosn.position.x);
+        float minY = Mathf.Min(minPosn.position.y, maxPosn.position.y);
+        float maxY = Mathf.Max(minPosn.position.y, maxPosn.position.y);
 
         if (Random.Range(0f, 1f) > 0.5)
         {
-            spawnPoint.x = Random.Range(minPosn.position.x, maxPosn.position.x);
+            spawnPoint.x = Random.Range(minX, maxX);
 
             if (Random.Range(0f, 1f) > 0.5)
             {
-                spawnPoint.y = minPosn.position.y;
+                spawnPoint.y = minY;
             } else
             {
-                spawnPoint.y = maxPosn.position.y;
+                spawnPoint.y = maxY;
             }
 
         } else
         {
-            spawnPoint.x = Random.Range(minPosn.position.y, maxPosn.position.y);
+            spawnPoint.y = Random.Range(minY, maxY);
 
             if (Random.Range(0f, 1f) > 0.5)
             {
-                spawnPoint.y = minPosn.position.x;
+                spawnPoint.x = minX;
             } else
             {
-                spawnPoint.y = maxPosn.position.x;
+                spawnPoint.x = maxX;
             }
         }
 
