@@ -197,7 +197,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6209836402569991432}
   rigidBody: {fileID: 7478109828603465121}
   moveSpeed: 2
-  damage: 2
+  damage: 1.25
   health: 15
   enemyDeathEffect: {fileID: 6061811255798151043, guid: 6982c6048adefd492a456946ab2067a3, type: 3}
   experienceToGive: 10

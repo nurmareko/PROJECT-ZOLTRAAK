@@ -142,12 +142,12 @@ MonoBehaviour:
   - {fileID: 841176586615057375, guid: 88b00a92bc453a2939283084c26c79eb, type: 3}
   characterLoadouts: []
   playerMoveDirection: {x: 0, y: 0}
-  maxHealth: 5
+  maxHealth: 6
   currentHealth: 5
   experience: 0
   currentLevel: 1
   maxLevel: 10
-  playerLevels: 0a000000140000001e000000
+  playerLevels: 050000000c00000014000000
   activeWeapon: {fileID: 549820434195867859}
   immunityDuration: 2
   immunityTimer: 0

@@ -17,7 +17,13 @@ public class EnemySpawner : MonoBehaviour
     public int waveNumber;
     public Transform minPosn;
     public Transform maxPosn;
+    [SerializeField] private float minimumSpawnInterval = 0.75f;
+    [SerializeField] private float spawnIntervalMultiplier = 0.95f;
 
+    void Awake()
+    {
+        ResetWaveState();
+    }
 
     // Update is called once per frame
     void Update()
@@ -54,9 +60,11 @@ public class EnemySpawner : MonoBehaviour
         {
             currentWave.spawnedEnemyCount = 0;
 
-            if (currentWave.spawnInterval > 0.3f)
+            if (currentWave.spawnInterval > minimumSpawnInterval)
             {
-                currentWave.spawnInterval *= 0.9f;
+                currentWave.spawnInterval = Mathf.Max(
+                    minimumSpawnInterval,
+                    currentWave.spawnInterval * spawnIntervalMultiplier);
             }
 
             AdvanceWave();
@@ -117,5 +125,24 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return spawnPoint;
+    }
+
+    private void ResetWaveState()
+    {
+        if (waves == null)
+        {
+            return;
+        }
+
+        foreach (Wave wave in waves)
+        {
+            if (wave == null)
+            {
+                continue;
+            }
+
+            wave.spawnedEnemyCount = 0;
+            wave.spawnTimer = 0f;
+        }
     }
 }

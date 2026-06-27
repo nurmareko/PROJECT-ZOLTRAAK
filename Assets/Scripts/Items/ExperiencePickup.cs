@@ -7,6 +7,9 @@ public class ExperiencePickup : MonoBehaviour
     private static Sprite generatedSprite;
 
     [SerializeField] private int experienceValue = 1;
+    [SerializeField] private float collectRadius = 0.45f;
+    [SerializeField] private float magnetRadius = 2.4f;
+    [SerializeField] private float magnetSpeed = 5f;
     [SerializeField] private float bobHeight = 0.08f;
     [SerializeField] private float bobFrequency = 4.5f;
 
@@ -41,7 +44,7 @@ public class ExperiencePickup : MonoBehaviour
 
         CircleCollider2D pickupCollider = GetComponent<CircleCollider2D>();
         pickupCollider.isTrigger = true;
-        pickupCollider.radius = 0.28f;
+        pickupCollider.radius = collectRadius;
     }
 
     private void Start()
@@ -51,6 +54,20 @@ public class ExperiencePickup : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerController.Instance != null && PlayerController.Instance.gameObject.activeSelf)
+        {
+            Vector3 playerPosition = PlayerController.Instance.transform.position;
+            if (Vector2.Distance(transform.position, playerPosition) <= magnetRadius)
+            {
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    playerPosition,
+                    magnetSpeed * Time.deltaTime);
+                startPosition = transform.position;
+                return;
+            }
+        }
+
         float bobOffset = Mathf.Sin(Time.time * bobFrequency) * bobHeight;
         transform.position = startPosition + Vector3.up * bobOffset;
     }

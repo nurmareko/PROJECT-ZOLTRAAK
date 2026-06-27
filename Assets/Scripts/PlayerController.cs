@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const int DefaultFirstLevelExperience = 10;
+    private const int DefaultFirstLevelExperience = 5;
 
     public static PlayerController Instance;
 
