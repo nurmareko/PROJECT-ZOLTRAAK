@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     private float pushCounter;
     private Vector2 direction;
+    private bool isDying;
 
     void FixedUpdate()
     {
@@ -64,6 +65,11 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDying)
+        {
+            return;
+        }
+
         health -= damage;
         DamageNumberController.Instance.CreateNumber(damage, transform.position);
 
@@ -71,9 +77,10 @@ public class Enemy : MonoBehaviour
 
         if(health <= 0)
         {
+            isDying = true;
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
-            PlayerController.Instance.GetExperience(experienceToGive);
+            ExperiencePickup.Create(transform.position, experienceToGive);
             AudioController.Instance.PlaySound(AudioController.Instance.enemyDie);
         }
     }
