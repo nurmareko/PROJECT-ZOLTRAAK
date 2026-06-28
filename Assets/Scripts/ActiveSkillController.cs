@@ -39,6 +39,15 @@ public class ActiveSkillController : MonoBehaviour
 
     [Header("Visual Feedback")]
     [SerializeField] private Color activeSkillTint = new Color(0.55f, 0.9f, 1f, 0.65f);
+    [SerializeField] private AudioClip playerASkillSound;
+    [SerializeField] private AudioClip playerBSkillSound;
+    [SerializeField] private AudioClip playerCSkillSound;
+    [SerializeField] private float skillSoundVolume = 0.75f;
+    [SerializeField] private Color playerAParticleColor = new Color(0.55f, 0.9f, 1f, 0.9f);
+    [SerializeField] private Color playerBParticleColor = new Color(0.78f, 1f, 0.62f, 0.9f);
+    [SerializeField] private Color playerCParticleColor = new Color(1f, 0.62f, 0.95f, 0.9f);
+    [SerializeField] private int skillParticleCount = 34;
+    [SerializeField] private float skillParticleLifetime = 0.42f;
 
     private readonly HashSet<Enemy> lungeHitEnemies = new HashSet<Enemy>();
     private PlayerController player;
@@ -138,10 +147,14 @@ public class ActiveSkillController : MonoBehaviour
                 BeginTimedSkill(selectedSkill, playerADuration);
                 player.SetSkillInvulnerable(true);
                 ApplySkillTint();
+                PlaySkillSound(playerASkillSound);
+                CreateParticleBurst(transform.position, playerAParticleColor, playerAPushRadius, skillParticleCount, skillParticleLifetime, 2.2f);
                 PushEnemies(playerAPushRadius, playerAPushSpeed, playerAPushDuration);
                 break;
 
             case SkillType.PlayerBRepel:
+                PlaySkillSound(playerBSkillSound);
+                CreateParticleBurst(transform.position, playerBParticleColor, playerBRepelRadius, skillParticleCount + 12, skillParticleLifetime, 3.4f);
                 PushEnemies(playerBRepelRadius, playerBRepelSpeed, playerBRepelDuration);
                 break;
 
@@ -151,6 +164,7 @@ public class ActiveSkillController : MonoBehaviour
                 BeginTimedSkill(selectedSkill, playerCLungeDuration);
                 player.SetSkillInvulnerable(playerCLungeInvulnerable);
                 ApplySkillTint();
+                PlaySkillSound(playerCSkillSound);
                 TeleportThroughLungePath();
                 break;
         }
@@ -212,10 +226,13 @@ public class ActiveSkillController : MonoBehaviour
         Vector2 startPosition = transform.position;
         Vector2 endPosition = startPosition + lungeDirection * playerCLungeDistance;
 
+        CreateParticleBurst(startPosition, playerCParticleColor, playerCLungeHitRadius, skillParticleCount, skillParticleLifetime, 2.8f);
+        CreateLungePathEffect(startPosition, endPosition);
         HitEnemiesAroundPoint(startPosition);
         HitEnemiesAlongPath(startPosition, lungeDirection, playerCLungeDistance);
         HitEnemiesAroundPoint(endPosition);
         player.TeleportTo(endPosition);
+        CreateParticleBurst(endPosition, playerCParticleColor, playerCLungeHitRadius, skillParticleCount, skillParticleLifetime, 2.8f);
     }
 
     private void HitEnemiesAlongPath(Vector2 startPosition, Vector2 direction, float distance)
@@ -305,6 +322,98 @@ public class ActiveSkillController : MonoBehaviour
         }
 
         UIController.Instance.UpdateSkillCooldown(GetSkillName(), cooldownRemaining, activeRemaining, hasActiveSkill);
+    }
+
+    private void PlaySkillSound(AudioClip clip)
+    {
+        if (clip == null)
+        {
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(clip, transform.position, skillSoundVolume);
+    }
+
+    private void CreateParticleBurst(
+        Vector2 position,
+        Color particleColor,
+        float radius,
+        int particleCount,
+        float lifetime,
+        float speed)
+    {
+        ParticleSystem particles = CreateParticleSystem("Skill Burst", position, particleColor, lifetime, speed);
+        ParticleSystem.MainModule main = particles.main;
+        main.startSize = new ParticleSystem.MinMaxCurve(0.08f, 0.18f);
+
+        ParticleSystem.ShapeModule shape = particles.shape;
+        shape.shapeType = ParticleSystemShapeType.Circle;
+        shape.radius = Mathf.Max(0.1f, radius);
+        shape.radiusThickness = 0.08f;
+
+        ParticleSystem.EmissionModule emission = particles.emission;
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, (short)Mathf.Clamp(particleCount, 1, 128)) });
+
+        particles.Play();
+        Destroy(particles.gameObject, lifetime + 0.4f);
+    }
+
+    private void CreateLungePathEffect(Vector2 startPosition, Vector2 endPosition)
+    {
+        Vector2 midpoint = (startPosition + endPosition) * 0.5f;
+        Vector2 direction = endPosition - startPosition;
+        float distance = direction.magnitude;
+
+        if (distance <= 0.01f)
+        {
+            return;
+        }
+
+        ParticleSystem particles = CreateParticleSystem("Lunge Path", midpoint, playerCParticleColor, 0.26f, 0.35f);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        particles.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        ParticleSystem.MainModule main = particles.main;
+        main.startSize = new ParticleSystem.MinMaxCurve(0.12f, 0.22f);
+
+        ParticleSystem.ShapeModule shape = particles.shape;
+        shape.shapeType = ParticleSystemShapeType.Box;
+        shape.scale = new Vector3(distance, playerCLungeHitRadius * 1.25f, 0.1f);
+
+        ParticleSystem.EmissionModule emission = particles.emission;
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 40) });
+
+        particles.Play();
+        Destroy(particles.gameObject, 0.7f);
+    }
+
+    private ParticleSystem CreateParticleSystem(
+        string objectName,
+        Vector2 position,
+        Color particleColor,
+        float lifetime,
+        float speed)
+    {
+        GameObject effectObject = new GameObject(objectName);
+        effectObject.transform.position = position;
+
+        ParticleSystem particles = effectObject.AddComponent<ParticleSystem>();
+        ParticleSystem.MainModule main = particles.main;
+        main.duration = 0.08f;
+        main.loop = false;
+        main.playOnAwake = false;
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.startLifetime = new ParticleSystem.MinMaxCurve(lifetime * 0.55f, lifetime);
+        main.startSpeed = new ParticleSystem.MinMaxCurve(speed * 0.4f, speed);
+        main.startColor = particleColor;
+
+        ParticleSystem.EmissionModule emission = particles.emission;
+        emission.rateOverTime = 0f;
+
+        ParticleSystemRenderer particleRenderer = particles.GetComponent<ParticleSystemRenderer>();
+        particleRenderer.sortingOrder = 20;
+
+        return particles;
     }
 
     private void ApplySkillTint()

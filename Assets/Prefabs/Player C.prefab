@@ -189,6 +189,15 @@ MonoBehaviour:
   playerCLungeDamage: 6
   playerCLungeInvulnerable: 1
   activeSkillTint: {r: 0.55, g: 0.9, b: 1, a: 0.65}
+  playerASkillSound: {fileID: 8300000, guid: 6230eaf5c5c82d8fcb2a823d12e9069e, type: 3}
+  playerBSkillSound: {fileID: 8300000, guid: d4b7734380e4f69758c419b3f57c825b, type: 3}
+  playerCSkillSound: {fileID: 8300000, guid: dc99fcebcae719abebcd5302f969c8af, type: 3}
+  skillSoundVolume: 0.75
+  playerAParticleColor: {r: 0.55, g: 0.9, b: 1, a: 0.9}
+  playerBParticleColor: {r: 0.78, g: 1, b: 0.62, a: 0.9}
+  playerCParticleColor: {r: 1, g: 0.62, b: 0.95, a: 0.9}
+  skillParticleCount: 34
+  skillParticleLifetime: 0.42
 --- !u!50 &6100633226815794300
 Rigidbody2D:
   serializedVersion: 5
