@@ -24,7 +24,7 @@ public class ActiveSkillController : MonoBehaviour
     [Header("Player B - Repel")]
     [SerializeField] private string playerBSkillName = "Repel";
     [SerializeField] private float playerBCooldown = 19f;
-    [SerializeField] private float playerBRepelRadius = 3.25f;
+    [SerializeField] private float playerBRepelRadius = 20f;
     [SerializeField] private float playerBRepelSpeed = 9.5f;
     [SerializeField] private float playerBRepelDuration = 0.22f;
 
@@ -57,6 +57,7 @@ public class ActiveSkillController : MonoBehaviour
     private SkillType activeSkill;
     private float cooldownRemaining;
     private float activeRemaining;
+    private float nextShieldShimmerTime;
     private Vector2 lungeDirection;
     private bool hasActiveSkill;
     private bool hasOriginalSpriteColor;
@@ -148,14 +149,16 @@ public class ActiveSkillController : MonoBehaviour
                 player.SetSkillInvulnerable(true);
                 ApplySkillTint();
                 PlaySkillSound(playerASkillSound);
-                CreateParticleBurst(transform.position, playerAParticleColor, playerAPushRadius, skillParticleCount, skillParticleLifetime, 2.2f);
+                GameFeelFeedback.PlayShieldBurst(transform.position, playerAPushRadius);
+                CreateParticleBurst(transform.position, playerAParticleColor, playerAPushRadius, Mathf.Max(8, skillParticleCount / 2), skillParticleLifetime, 1.8f);
                 PushEnemies(playerAPushRadius, playerAPushSpeed, playerAPushDuration);
                 break;
 
             case SkillType.PlayerBRepel:
                 PlaySkillSound(playerBSkillSound);
-                CreateParticleBurst(transform.position, playerBParticleColor, playerBRepelRadius, skillParticleCount + 12, skillParticleLifetime, 3.4f);
-                PushEnemies(playerBRepelRadius, playerBRepelSpeed, playerBRepelDuration);
+                GameFeelFeedback.PlayRepelBurst(transform.position, playerBRepelRadius);
+                CreateParticleBurst(transform.position, playerBParticleColor, playerBRepelRadius, Mathf.Max(12, skillParticleCount / 2), skillParticleLifetime, 2.4f);
+                RepelEnemiesInRadius(playerBRepelRadius, playerBRepelSpeed, playerBRepelDuration);
                 break;
 
             case SkillType.PlayerCLunge:
@@ -183,6 +186,11 @@ public class ActiveSkillController : MonoBehaviour
         {
             case SkillType.PlayerAShieldPush:
                 PushEnemies(playerAPushRadius, playerAPushSpeed, playerAPushDuration);
+                if (Time.time >= nextShieldShimmerTime)
+                {
+                    nextShieldShimmerTime = Time.time + 0.45f;
+                    GameFeelFeedback.PlayShieldShimmer(transform.position, playerAPushRadius);
+                }
                 break;
 
             case SkillType.PlayerCLunge:
@@ -221,18 +229,44 @@ public class ActiveSkillController : MonoBehaviour
         }
     }
 
+    private void RepelEnemiesInRadius(float radius, float pushSpeed, float pushDuration)
+    {
+        Vector2 repelCenter = transform.position;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(repelCenter, radius);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Enemy enemy = hits[i].GetComponentInParent<Enemy>();
+
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            Vector2 enemyPosition = enemy.transform.position;
+            Vector2 pushDirection = enemyPosition - repelCenter;
+
+            if (pushDirection.sqrMagnitude <= 0.001f)
+            {
+                pushDirection = Vector2.right;
+            }
+
+            enemy.ApplyExternalPush(pushDirection.normalized, pushSpeed, pushDuration);
+        }
+    }
+
     private void TeleportThroughLungePath()
     {
         Vector2 startPosition = transform.position;
         Vector2 endPosition = startPosition + lungeDirection * playerCLungeDistance;
 
-        CreateParticleBurst(startPosition, playerCParticleColor, playerCLungeHitRadius, skillParticleCount, skillParticleLifetime, 2.8f);
-        CreateLungePathEffect(startPosition, endPosition);
+        GameFeelFeedback.PlayLungeBurst(startPosition);
+        GameFeelFeedback.PlayLungePath(startPosition, endPosition, playerCLungeHitRadius * 0.72f);
         HitEnemiesAroundPoint(startPosition);
         HitEnemiesAlongPath(startPosition, lungeDirection, playerCLungeDistance);
         HitEnemiesAroundPoint(endPosition);
         player.TeleportTo(endPosition);
-        CreateParticleBurst(endPosition, playerCParticleColor, playerCLungeHitRadius, skillParticleCount, skillParticleLifetime, 2.8f);
+        GameFeelFeedback.PlayLungeBurst(endPosition);
     }
 
     private void HitEnemiesAlongPath(Vector2 startPosition, Vector2 direction, float distance)
@@ -398,6 +432,7 @@ public class ActiveSkillController : MonoBehaviour
         effectObject.transform.position = position;
 
         ParticleSystem particles = effectObject.AddComponent<ParticleSystem>();
+        particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         ParticleSystem.MainModule main = particles.main;
         main.duration = 0.08f;
         main.loop = false;

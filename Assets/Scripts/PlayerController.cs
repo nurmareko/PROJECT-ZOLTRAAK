@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour
             immunityTimer = immunityDuration;
             StartImmunityBlink();
             currentHealth = ClampHealth(currentHealth - damage);
+            GameFeelFeedback.PlayPlayerHit(transform.position);
 
             UIController.Instance.UpdateHealthSlider();
 

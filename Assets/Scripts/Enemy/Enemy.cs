@@ -123,14 +123,19 @@ public class Enemy : MonoBehaviour
 
         pushCounter = pushTime;
         PlayDamageFlash();
+        GameFeelFeedback.PlayEnemyHit(transform.position);
 
         if(health <= 0)
         {
             isDying = true;
+            GameFeelFeedback.PlayEnemyDeath(transform.position);
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
             ExperiencePickup.Create(transform.position, experienceToGive);
-            AudioController.Instance.PlaySound(AudioController.Instance.enemyDie);
+            if (AudioController.Instance != null)
+            {
+                AudioController.Instance.PlayModifiedSound(AudioController.Instance.enemyDie);
+            }
         }
     }
 

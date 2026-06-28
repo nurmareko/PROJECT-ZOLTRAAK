@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameActive = true;
+        GameFeelFeedback.EnsureAmbientMotes();
     }
 
     public void Update()

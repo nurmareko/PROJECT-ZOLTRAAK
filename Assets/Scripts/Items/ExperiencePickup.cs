@@ -83,6 +83,7 @@ public class ExperiencePickup : MonoBehaviour
                     playerPosition,
                     magnetSpeed * Time.deltaTime);
                 startPosition = transform.position;
+                GameFeelFeedback.PlayXpTrail(transform.position);
                 return;
             }
         }
@@ -111,6 +112,7 @@ public class ExperiencePickup : MonoBehaviour
         collected = true;
         PlayerController.Instance.GetExperience(experienceValue);
         PlayCollectSound();
+        GameFeelFeedback.PlayXpCollect(transform.position);
 
         if (pickupCollider != null)
         {

@@ -178,7 +178,7 @@ MonoBehaviour:
   playerAPushDuration: 0.12
   playerBSkillName: Repel
   playerBCooldown: 19
-  playerBRepelRadius: 3.25
+  playerBRepelRadius: 12
   playerBRepelSpeed: 9.5
   playerBRepelDuration: 0.22
   playerCSkillName: Lunge

@@ -1397,8 +1397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137}
-  m_SizeDelta: {x: 250, y: 208}
+  m_AnchoredPosition: {x: 0, y: -142}
+  m_SizeDelta: {x: 226.12, y: 187.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &305536305
 MonoBehaviour:
@@ -2129,7 +2129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
   gameSceneName: Game
   howToPlayPanel: {fileID: 1351590753}
-  startGameClickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  startGameClickSound: {fileID: 0}
   fallbackStartGameDelay: 1.35
 --- !u!1 &354527113
 GameObject:
@@ -2169,8 +2169,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -658, y: 988.1}
-  m_SizeDelta: {x: 330, y: 53.8}
+  m_AnchoredPosition: {x: -661, y: 988.09}
+  m_SizeDelta: {x: 256, y: 53.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &354527115
 MonoBehaviour:
@@ -5595,8 +5595,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Orbiting blades damage nearby enemies.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
+  m_sharedMaterial: {fileID: -3174286742375091484, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6501,10 +6501,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tough survivor. Fires in movement direction.
+  m_text: Fires in movement direction.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
+  m_sharedMaterial: {fileID: -3174286742375091484, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9806,12 +9806,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Balanced survivor. Uses an area attack for crowd control.
-
-'
+  m_text: Uses an area attack for crowd control.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
+  m_sharedMaterial: {fileID: -3174286742375091484, guid: fc0dbf00f96ae263dbee3af575b059ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
