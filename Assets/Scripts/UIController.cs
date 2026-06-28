@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     private const float LevelUpPanelPulseDuration = 0.22f;
     private const float LevelUpPanelStartScale = 0.96f;
     private const float LevelUpPanelPeakScale = 1.04f;
+    private const float LevelTextPulseDuration = 0.18f;
+    private const float LevelTextPeakScale = 1.12f;
 
     public static UIController Instance;
     [SerializeField] private Slider playerHealthSlider;
@@ -26,8 +28,12 @@ public class UIController : MonoBehaviour
     public LevelUpButton[] levelUpButtons; 
 
     private Coroutine levelUpPanelPulseCoroutine;
+    private Coroutine levelTextPulseCoroutine;
     private Vector3 levelUpPanelBaseScale = Vector3.one;
+    private Vector3 levelTextBaseScale = Vector3.one;
     private bool hasLevelUpPanelBaseScale;
+    private bool hasLevelTextBaseScale;
+    private int shownLevel;
 
     void Awake()
     {
@@ -41,13 +47,14 @@ public class UIController : MonoBehaviour
         }
 
         EnsureLevelUpButtons();
+        ApplyReadabilityDefaults();
     }
 
     public void UpdateHealthSlider()
     {
         playerHealthSlider.maxValue = PlayerController.Instance.maxHealth;
         playerHealthSlider.value = PlayerController.Instance.currentHealth;
-        healthText.text = playerHealthSlider.value + " / " + playerHealthSlider.maxValue;
+        healthText.text = "HP " + FormatValue(playerHealthSlider.value) + " / " + FormatValue(playerHealthSlider.maxValue);
     }
 
     public void UpdateExperienceSlider()
@@ -58,8 +65,8 @@ public class UIController : MonoBehaviour
          playerExperienceSlider.maxValue = experienceRequirement;
          playerExperienceSlider.value = Mathf.Min(player.experience, experienceRequirement);
          experienceText.text = player.IsAtMaxLevel()
-            ? "MAX"
-            : playerExperienceSlider.value + " / " + playerExperienceSlider.maxValue;
+            ? "XP MAX"
+            : "XP " + FormatValue(playerExperienceSlider.value) + " / " + FormatValue(playerExperienceSlider.maxValue);
     }
 
     public void UpdateLevelText()
@@ -68,17 +75,27 @@ public class UIController : MonoBehaviour
 
         if (levelText != null)
         {
-            levelText.text = "Level " + PlayerController.Instance.currentLevel;
+            int currentLevel = PlayerController.Instance.currentLevel;
+            bool shouldPulse = shownLevel > 0 && currentLevel > shownLevel;
+
+            levelText.text = "Level " + currentLevel;
+            shownLevel = currentLevel;
+
+            if (shouldPulse)
+            {
+                PlayLevelTextPulse();
+            }
         }
     }
 
     public void UpdateTimer(float timer)
     {
-        timerText.text = FormatTime(timer);
+        timerText.text = "Time " + FormatTime(timer);
     }
 
     public void ShowGameOver(float survivedTime)
     {
+        ApplyGameOverReadability();
         UpdateSurvivedTime(survivedTime);
         gameoverPanel.SetActive(true);
     }
@@ -178,6 +195,7 @@ public class UIController : MonoBehaviour
         levelText.font = timerText.font;
         levelText.fontSharedMaterial = timerText.fontSharedMaterial;
         levelText.color = timerText.color;
+        StyleHudText(levelText, 20f, 42f);
     }
 
     private void ArrangeLevelUpButtons()
@@ -270,7 +288,7 @@ public class UIController : MonoBehaviour
 
         if (survivedTimeText != null)
         {
-            survivedTimeText.text = "Survived: " + FormatTime(survivedTime);
+            survivedTimeText.text = "Survived Time: " + FormatTime(survivedTime);
         }
     }
 
@@ -311,8 +329,9 @@ public class UIController : MonoBehaviour
         survivedTimeText = textObject.GetComponent<TMP_Text>();
         survivedTimeText.alignment = TextAlignmentOptions.Center;
         survivedTimeText.enableAutoSizing = true;
-        survivedTimeText.fontSizeMin = 18f;
-        survivedTimeText.fontSizeMax = 36f;
+        survivedTimeText.fontSizeMin = 22f;
+        survivedTimeText.fontSizeMax = 42f;
+        survivedTimeText.fontStyle = FontStyles.Bold;
         survivedTimeText.raycastTarget = false;
 
         if (titleText != null)
@@ -321,6 +340,161 @@ public class UIController : MonoBehaviour
             survivedTimeText.fontSharedMaterial = titleText.fontSharedMaterial;
             survivedTimeText.color = titleText.color;
         }
+    }
+
+    private void ApplyReadabilityDefaults()
+    {
+        StyleHudText(healthText, 18f, 38f);
+        StyleHudText(experienceText, 18f, 38f);
+        StyleHudText(timerText, 30f, 92f);
+
+        EnsureLevelText();
+        StyleHudText(levelText, 20f, 42f);
+        ApplyPanelReadability(levelUpPanel);
+        ApplyGameOverReadability();
+    }
+
+    private void ApplyPanelReadability(GameObject panel)
+    {
+        if (panel == null)
+        {
+            return;
+        }
+
+        TMP_Text[] panelTexts = panel.GetComponentsInChildren<TMP_Text>(true);
+
+        foreach (TMP_Text panelText in panelTexts)
+        {
+            if (panelText.name == "Title")
+            {
+                StylePanelText(panelText, 36f, 96f, FontStyles.Bold);
+            }
+            else if (panelText.name == "Subtitle")
+            {
+                StylePanelText(panelText, 22f, 52f, FontStyles.Bold);
+            }
+        }
+    }
+
+    private void ApplyGameOverReadability()
+    {
+        if (gameoverPanel == null)
+        {
+            return;
+        }
+
+        ApplyPanelReadability(gameoverPanel);
+
+        TMP_Text[] gameOverTexts = gameoverPanel.GetComponentsInChildren<TMP_Text>(true);
+
+        foreach (TMP_Text gameOverText in gameOverTexts)
+        {
+            if (gameOverText.transform.parent != null && gameOverText.transform.parent.name == "Restart Button")
+            {
+                gameOverText.text = "Restart Run";
+                StyleButtonText(gameOverText);
+            }
+        }
+    }
+
+    private void StyleHudText(TMP_Text text, float minSize, float maxSize)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.enableAutoSizing = true;
+        text.fontSizeMin = minSize;
+        text.fontSizeMax = maxSize;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = TextAlignmentOptions.Center;
+        text.raycastTarget = false;
+    }
+
+    private void StylePanelText(TMP_Text text, float minSize, float maxSize, FontStyles style)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.enableAutoSizing = true;
+        text.fontSizeMin = minSize;
+        text.fontSizeMax = maxSize;
+        text.fontStyle = style;
+        text.alignment = TextAlignmentOptions.Center;
+        text.raycastTarget = false;
+    }
+
+    private void StyleButtonText(TMP_Text text)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 22f;
+        text.fontSizeMax = 38f;
+        text.fontStyle = FontStyles.Bold;
+        text.alignment = TextAlignmentOptions.Center;
+    }
+
+    private void PlayLevelTextPulse()
+    {
+        if (levelText == null)
+        {
+            return;
+        }
+
+        RectTransform textTransform = levelText.GetComponent<RectTransform>();
+
+        if (textTransform == null)
+        {
+            return;
+        }
+
+        if (!hasLevelTextBaseScale)
+        {
+            levelTextBaseScale = textTransform.localScale;
+            hasLevelTextBaseScale = true;
+        }
+
+        if (levelTextPulseCoroutine != null)
+        {
+            StopCoroutine(levelTextPulseCoroutine);
+        }
+
+        levelTextPulseCoroutine = StartCoroutine(PulseLevelText(textTransform));
+    }
+
+    private IEnumerator PulseLevelText(RectTransform textTransform)
+    {
+        float elapsed = 0f;
+        Vector3 peakScale = levelTextBaseScale * LevelTextPeakScale;
+
+        while (elapsed < LevelTextPulseDuration)
+        {
+            float t = elapsed / LevelTextPulseDuration;
+            float eased = Mathf.SmoothStep(0f, 1f, t);
+            textTransform.localScale = t < 0.5f
+                ? Vector3.Lerp(levelTextBaseScale, peakScale, eased * 2f)
+                : Vector3.Lerp(peakScale, levelTextBaseScale, (eased - 0.5f) * 2f);
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        textTransform.localScale = levelTextBaseScale;
+        levelTextPulseCoroutine = null;
+    }
+
+    private string FormatValue(float value)
+    {
+        return Mathf.Approximately(value, Mathf.Round(value))
+            ? Mathf.RoundToInt(value).ToString()
+            : value.ToString("0.#");
     }
 
     private string FormatTime(float timer)

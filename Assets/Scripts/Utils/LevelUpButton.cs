@@ -22,6 +22,7 @@ public class LevelUpButton : MonoBehaviour
         weaponName.text = weapon.name;
         weaponDescription.text = GetWeaponDescription(weapon);
         SetIcon(weapon.weaponImage);
+        ApplyReadability();
 
         assignedUpgrade = weapon.LevelUp;
     }
@@ -31,6 +32,7 @@ public class LevelUpButton : MonoBehaviour
         weaponName.text = upgradeName;
         weaponDescription.text = upgradeDescription;
         SetIcon(upgradeIcon);
+        ApplyReadability();
 
         assignedUpgrade = upgradeAction;
     }
@@ -66,5 +68,28 @@ public class LevelUpButton : MonoBehaviour
 
         weaponIcon.sprite = sprite;
         weaponIcon.enabled = sprite != null;
+    }
+
+    private void ApplyReadability()
+    {
+        if (weaponName != null)
+        {
+            weaponName.enableAutoSizing = true;
+            weaponName.fontSizeMin = 24f;
+            weaponName.fontSizeMax = 42f;
+            weaponName.fontStyle = FontStyles.Bold;
+            weaponName.alignment = TextAlignmentOptions.Center;
+            weaponName.raycastTarget = false;
+        }
+
+        if (weaponDescription != null)
+        {
+            weaponDescription.enableAutoSizing = true;
+            weaponDescription.fontSizeMin = 18f;
+            weaponDescription.fontSizeMax = 30f;
+            weaponDescription.fontStyle = FontStyles.Normal;
+            weaponDescription.alignment = TextAlignmentOptions.Center;
+            weaponDescription.raycastTarget = false;
+        }
     }
 }
