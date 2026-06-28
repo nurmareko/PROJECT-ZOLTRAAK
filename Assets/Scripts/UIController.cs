@@ -30,6 +30,8 @@ public class UIController : MonoBehaviour
 
     [Header("Level Up Choices")]
     public LevelUpButton[] levelUpButtons;
+    [SerializeField] private Sprite healthUpgradeIcon;
+    [SerializeField] private Sprite agilityUpgradeIcon;
 
     private Coroutine levelUpPanelPulseCoroutine;
     private Coroutine levelTextPulseCoroutine;
@@ -154,12 +156,12 @@ public class UIController : MonoBehaviour
         levelUpButtons[1].ActivateButton(
             "Max Health",
             player.GetHealthUpgradeDescription(),
-            null,
+            healthUpgradeIcon,
             player.UpgradeHealth);
         levelUpButtons[2].ActivateButton(
             "Agility",
             player.GetAgilityUpgradeDescription(),
-            null,
+            agilityUpgradeIcon,
             player.UpgradeAgility);
     }
 

@@ -290,7 +290,7 @@ MonoBehaviour:
     range: 2
     speed: 1.4
     description: Unleashes four fast guard blades that carve and scatter crowds.
-  weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
+  weaponImage: {fileID: 1532101336463172598, guid: f941618d60800e10ab6b7288f27ba414, type: 3}
   spawnSound: {fileID: 6384162626498875091}
   despawnSound: {fileID: 2853373691649222244}
   hitSound: {fileID: 5494423496898331211}

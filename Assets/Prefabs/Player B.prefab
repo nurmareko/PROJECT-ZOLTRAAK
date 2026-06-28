@@ -454,7 +454,7 @@ MonoBehaviour:
     range: 0
     speed: 8.25
     description: Adds a heavy lower-left diagonal shot.
-  weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
+  weaponImage: {fileID: 8238568774864597773, guid: 561e11b594b0d8129ac6db9e24f90fe9, type: 3}
   spawnSound: {fileID: 3791227196317094186}
   despawnSound: {fileID: 5105632837680414769}
   hitSound: {fileID: 6135571684028888873}

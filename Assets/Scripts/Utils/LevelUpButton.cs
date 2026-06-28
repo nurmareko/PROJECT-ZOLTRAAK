@@ -8,6 +8,7 @@ public class LevelUpButton : MonoBehaviour
     public TMP_Text weaponName;
     public TMP_Text weaponDescription;
     public Image weaponIcon;
+    public Sprite fallbackIcon;
 
     private Action assignedUpgrade;
 
@@ -38,7 +39,7 @@ public class LevelUpButton : MonoBehaviour
             weaponDescription.text = upgradeDescription;
         }
 
-        SetIcon(upgradeIcon);
+        SetIcon(upgradeIcon != null ? upgradeIcon : fallbackIcon);
         assignedUpgrade = upgradeAction;
     }
 
