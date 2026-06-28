@@ -26,6 +26,8 @@ public class UIController : MonoBehaviour
 
     [Header("Panels")]
     [SerializeField] private TMP_Text survivedTimeText;
+    [SerializeField] private GameObject victoryPanel;
+    [SerializeField] private TMP_Text victoryStatusText;
     public GameObject gameoverPanel;
     public GameObject levelUpPanel;
     public GameObject PausePanel;
@@ -130,6 +132,19 @@ public class UIController : MonoBehaviour
         ShowModalPanel(gameoverPanel);
     }
 
+    public void ShowVictory(float survivedTime, float objectiveTime)
+    {
+        HideGameplayModalPanels();
+
+        if (victoryStatusText != null)
+        {
+            victoryStatusText.text = "Objective Complete: Survive " + FormatTime(objectiveTime)
+                + "\nSurvived Time: " + FormatTime(survivedTime);
+        }
+
+        ShowModalPanel(victoryPanel);
+    }
+
     public void LevelUpPanelOpen()
     {
         if (levelUpPanel == null)
@@ -216,6 +231,21 @@ public class UIController : MonoBehaviour
 
         panel.transform.SetAsLastSibling();
         panel.SetActive(true);
+    }
+
+    private void HideGameplayModalPanels()
+    {
+        StopLevelUpPanelPulse();
+
+        if (levelUpPanel != null)
+        {
+            levelUpPanel.SetActive(false);
+        }
+
+        if (PausePanel != null)
+        {
+            PausePanel.SetActive(false);
+        }
     }
 
     private void PlayLevelUpPanelPulse()

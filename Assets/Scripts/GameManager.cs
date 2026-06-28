@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [SerializeField] private float survivalObjectiveSeconds = 180f;
+
     public float gameTime;
     private bool gameActive;
 
@@ -32,6 +34,12 @@ public class GameManager : MonoBehaviour
             gameTime += Time.deltaTime;
             UIController.Instance.UpdateTimer(gameTime);
 
+            if (gameTime >= survivalObjectiveSeconds)
+            {
+                CompleteSurvivalObjective();
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
             {
                 Pause();
@@ -41,6 +49,11 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (!gameActive)
+        {
+            return;
+        }
+
         gameActive = false;
         StartCoroutine(showGameOverScreen(  ));
     }
@@ -83,5 +96,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1f;
+    }
+
+    private void CompleteSurvivalObjective()
+    {
+        gameActive = false;
+        gameTime = survivalObjectiveSeconds;
+        UIController.Instance.UpdateTimer(gameTime);
+        UIController.Instance.ShowVictory(gameTime, survivalObjectiveSeconds);
+        Time.timeScale = 0f;
     }
 }
