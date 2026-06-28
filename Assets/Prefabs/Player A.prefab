@@ -134,7 +134,7 @@ MonoBehaviour:
   rigidBody: {fileID: 6100633226815794300}
   animator: {fileID: 6329713244309819150}
   spriteRenderer: {fileID: 2562826436135036078}
-  moveSpeed: 3.15
+  moveSpeed: 3.35
   healthUpgradeAmount: 1
   agilityUpgradeAmount: 0.25
   characterIndex: 0
@@ -269,26 +269,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AreaWeapon
   weaponLevel: 0
   stats:
-  - cooldown: 3.8
+  - cooldown: 3.2
     duration: 3
     amount: 1
-    damage: 1
+    damage: 1.25
     range: 1.5
-    speed: 0.4
+    speed: 0.35
     description: Summons a damage zone around Player A.
-  - cooldown: 3.7
+  - cooldown: 3
     duration: 3
     amount: 1
-    damage: 1
+    damage: 1.25
     range: 1.7
-    speed: 0.34
+    speed: 0.3
     description: The damage zone reaches farther and ticks faster.
-  - cooldown: 3.5
+  - cooldown: 2.8
     duration: 3
     amount: 1
-    damage: 1.5
+    damage: 1.9
     range: 2
-    speed: 0.3
+    speed: 0.26
     description: The damage zone grows wider, faster, and hits harder.
   weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
   spawnSound: {fileID: 6414065578143333680}
