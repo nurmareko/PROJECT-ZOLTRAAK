@@ -269,27 +269,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpinWeapon
   weaponLevel: 0
   stats:
-  - cooldown: 5
-    duration: 3
-    amount: 2
-    damage: 1
-    range: 1.6
-    speed: 1
-    description: Summons twin counter-spinning blades that shove enemies aside.
-  - cooldown: 4.5
-    duration: 3.5
-    amount: 3
-    damage: 1.25
-    range: 1.8
-    speed: 1.2
-    description: Adds a wider blade pattern with stronger spiral control.
-  - cooldown: 4
+  - cooldown: 4.2
     duration: 4
+    amount: 2
+    damage: 0.8
+    range: 1.7
+    speed: 1.35
+    description: Summons twin guard blades that rapidly orbit, carve, and shove enemies away.
+  - cooldown: 3.8
+    duration: 4.3
+    amount: 3
+    damage: 1
+    range: 1.9
+    speed: 1.6
+    description: Adds a third blade and stronger spiral control for close-range crowd breaks.
+  - cooldown: 3.4
+    duration: 4.8
     amount: 4
-    damage: 1.5
-    range: 2
-    speed: 1.4
-    description: Unleashes four fast guard blades that carve and scatter crowds.
+    damage: 1.25
+    range: 2.1
+    speed: 1.9
+    description: Unleashes four fast guard blades that shred and scatter enemies around you.
   weaponImage: {fileID: 1532101336463172598, guid: f941618d60800e10ab6b7288f27ba414, type: 3}
   spawnSound: {fileID: 6384162626498875091}
   despawnSound: {fileID: 2853373691649222244}

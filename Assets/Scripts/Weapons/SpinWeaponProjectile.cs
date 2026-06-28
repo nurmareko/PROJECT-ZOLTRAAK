@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class SpinWeaponProjectile : MonoBehaviour
 {
+    private const float MinHitCooldown = 0.06f;
+    private const float BaseHitCooldown = 0.24f;
+
     private SpinWeapon weapon;
     private SpinWeaponPrefab weaponPrefab;
     private readonly Dictionary<Enemy, float> nextHitTimes = new Dictionary<Enemy, float>();
@@ -55,7 +58,7 @@ public class SpinWeaponProjectile : MonoBehaviour
             return;
         }
 
-        float hitCooldown = Mathf.Max(0.08f, 0.35f / Mathf.Max(weapon.stats[weapon.weaponLevel].speed, 0.1f));
+        float hitCooldown = Mathf.Max(MinHitCooldown, BaseHitCooldown / Mathf.Max(weapon.stats[weapon.weaponLevel].speed, 0.1f));
 
         if (nextHitTimes.TryGetValue(enemy, out float nextHitTime) && Time.time < nextHitTime)
         {
@@ -64,6 +67,7 @@ public class SpinWeaponProjectile : MonoBehaviour
 
         nextHitTimes[enemy] = Time.time + hitCooldown;
         enemy.TakeDamage(weapon.stats[weapon.weaponLevel].damage);
+        KnockEnemyOutward(collider);
     }
 
     private void SwirlEnemy(Collider2D collider)
@@ -74,15 +78,32 @@ public class SpinWeaponProjectile : MonoBehaviour
         }
 
         Vector2 swirlDirection = weaponPrefab.GetSwirlDirection(collider.transform.position);
-        float shoveDistance = (0.25f + weapon.stats[weapon.weaponLevel].speed * 0.08f) * Time.fixedDeltaTime;
+        float shoveDistance = (0.75f + weapon.stats[weapon.weaponLevel].speed * 0.18f) * Time.fixedDeltaTime;
+        MoveEnemy(collider, swirlDirection, shoveDistance);
+    }
+
+    private void KnockEnemyOutward(Collider2D collider)
+    {
+        if (weapon == null || weaponPrefab == null)
+        {
+            return;
+        }
+
+        Vector2 outwardDirection = weaponPrefab.GetOutwardDirection(collider.transform.position);
+        float knockDistance = 0.12f + (weapon.stats[weapon.weaponLevel].speed * 0.04f);
+        MoveEnemy(collider, outwardDirection, knockDistance);
+    }
+
+    private void MoveEnemy(Collider2D collider, Vector2 direction, float distance)
+    {
         Rigidbody2D enemyBody = collider.attachedRigidbody;
 
         if (enemyBody != null)
         {
-            enemyBody.MovePosition(enemyBody.position + (swirlDirection * shoveDistance));
+            enemyBody.MovePosition(enemyBody.position + (direction * distance));
             return;
         }
 
-        collider.transform.position += (Vector3)(swirlDirection * shoveDistance);
+        collider.transform.position += (Vector3)(direction * distance);
     }
 }
