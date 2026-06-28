@@ -62,12 +62,12 @@ public class GameManager : MonoBehaviour
     {
         if (!UIController.Instance.PausePanel.activeSelf && !UIController.Instance.gameoverPanel.activeSelf)
         {
-            UIController.Instance.PausePanel.SetActive(true);
+            UIController.Instance.PausePanelOpen();
             Time.timeScale = 0f;
             AudioController.Instance.PlaySound(AudioController.Instance.pause);
         } else
         {
-            UIController.Instance.PausePanel.SetActive(false);
+            UIController.Instance.PausePanelClose();
             Time.timeScale = 1f;
             AudioController.Instance.PlaySound(AudioController.Instance.unpause);
         }

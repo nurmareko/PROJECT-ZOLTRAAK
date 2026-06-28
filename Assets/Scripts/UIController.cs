@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     private const int RequiredLevelUpButtonCount = 3;
     private const float HealthDisplayScale = 10f;
+    private const int UiCanvasSortingOrder = 100;
     private const float LevelUpPanelPulseDuration = 0.22f;
     private const float LevelUpPanelStartScale = 0.96f;
     private const float LevelUpPanelPeakScale = 1.04f;
@@ -41,12 +42,14 @@ public class UIController : MonoBehaviour
     private bool hasLevelUpPanelBaseScale;
     private bool hasLevelTextBaseScale;
     private int shownLevel;
+    private Canvas rootCanvas;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            ConfigureCanvasSorting();
         }
         else
         {
@@ -124,11 +127,7 @@ public class UIController : MonoBehaviour
     public void ShowGameOver(float survivedTime)
     {
         UpdateSurvivedTime(survivedTime);
-
-        if (gameoverPanel != null)
-        {
-            gameoverPanel.SetActive(true);
-        }
+        ShowModalPanel(gameoverPanel);
     }
 
     public void LevelUpPanelOpen()
@@ -138,7 +137,7 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        levelUpPanel.SetActive(true);
+        ShowModalPanel(levelUpPanel);
         Time.timeScale = 0f;
         PlayLevelUpPanelPulse();
     }
@@ -153,6 +152,19 @@ public class UIController : MonoBehaviour
         }
 
         Time.timeScale = 1f;
+    }
+
+    public void PausePanelOpen()
+    {
+        ShowModalPanel(PausePanel);
+    }
+
+    public void PausePanelClose()
+    {
+        if (PausePanel != null)
+        {
+            PausePanel.SetActive(false);
+        }
     }
 
     public void ActivateLevelUpButtons(Weapon activeWeapon)
@@ -175,6 +187,35 @@ public class UIController : MonoBehaviour
             player.GetAgilityUpgradeDescription(),
             agilityUpgradeIcon,
             player.UpgradeAgility);
+    }
+
+    private void ConfigureCanvasSorting()
+    {
+        rootCanvas = GetComponent<Canvas>();
+
+        if (rootCanvas == null)
+        {
+            return;
+        }
+
+        rootCanvas.overrideSorting = true;
+        rootCanvas.sortingOrder = UiCanvasSortingOrder;
+    }
+
+    private void ShowModalPanel(GameObject panel)
+    {
+        if (panel == null)
+        {
+            return;
+        }
+
+        if (DamageNumberController.Instance != null)
+        {
+            DamageNumberController.Instance.ClearNumbers();
+        }
+
+        panel.transform.SetAsLastSibling();
+        panel.SetActive(true);
     }
 
     private void PlayLevelUpPanelPulse()
