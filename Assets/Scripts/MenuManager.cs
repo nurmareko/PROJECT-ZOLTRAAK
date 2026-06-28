@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private string gameSceneName = "Game";
+    [SerializeField] private GameObject howToPlayPanel;
 
     public void NewGame()
     {
@@ -28,6 +29,22 @@ public class MenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ShowHowToPlay()
+    {
+        if (howToPlayPanel != null)
+        {
+            howToPlayPanel.SetActive(true);
+        }
+    }
+
+    public void HideHowToPlay()
+    {
+        if (howToPlayPanel != null)
+        {
+            howToPlayPanel.SetActive(false);
+        }
     }
 
     private void StartGameWithCharacter(int characterIndex)
