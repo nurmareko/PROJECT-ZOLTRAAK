@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8498310392883290114}
   - component: {fileID: 6100633226815794300}
   - component: {fileID: 1210239815151894808}
+  - component: {fileID: 3300112233445566777}
   m_Layer: 6
   m_Name: Player B
   m_TagString: Player
@@ -156,6 +157,38 @@ MonoBehaviour:
   immunityTimer: 0
   immunityBlinkInterval: 0.08
   immunityBlinkAlpha: 0.35
+--- !u!114 &3300112233445566777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841176586615057375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3dd5a03e7744d39c8dca939913f3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActiveSkillController
+  activationKey: 32
+  playerASkillName: Shield
+  playerACooldown: 15
+  playerADuration: 3
+  playerAPushRadius: 1.15
+  playerAPushSpeed: 6
+  playerAPushDuration: 0.12
+  playerBSkillName: Repel
+  playerBCooldown: 19
+  playerBRepelRadius: 3.25
+  playerBRepelSpeed: 9.5
+  playerBRepelDuration: 0.22
+  playerCSkillName: Lunge
+  playerCCooldown: 11
+  playerCLungeDuration: 0.12
+  playerCLungeDistance: 4.5
+  playerCLungeHitRadius: 0.8
+  playerCLungeDamage: 6
+  playerCLungeInvulnerable: 1
+  activeSkillTint: {r: 0.55, g: 0.9, b: 1, a: 0.65}
 --- !u!50 &6100633226815794300
 Rigidbody2D:
   serializedVersion: 5

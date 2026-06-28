@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Color damageFlashColor = new Color(1f, 0.35f, 0.35f, 1f);
 
     private float pushCounter;
+    private float externalPushTimer;
+    private Vector2 externalPushVelocity;
     private Vector2 direction;
     private bool isDying;
     private Color originalSpriteColor = Color.white;
@@ -48,6 +50,13 @@ public class Enemy : MonoBehaviour
             float enemyX = gameObject.transform.position.x;
             bool isPlayerOnRight = playerX > enemyX;
             spriteRenderer.flipX = isPlayerOnRight;
+
+            if (externalPushTimer > 0f)
+            {
+                externalPushTimer -= Time.fixedDeltaTime;
+                rigidBody.linearVelocity = externalPushVelocity;
+                return;
+            }
 
             // Push back enemy
             if (pushCounter > 0)
@@ -84,6 +93,22 @@ public class Enemy : MonoBehaviour
         {
             PlayerController.Instance.takeDamage(damage);
         }
+    }
+
+    public void ApplyExternalPush(Vector2 pushDirection, float pushSpeed, float pushDuration)
+    {
+        if (isDying)
+        {
+            return;
+        }
+
+        if (pushDirection.sqrMagnitude <= 0.001f)
+        {
+            pushDirection = Random.insideUnitCircle.normalized;
+        }
+
+        externalPushVelocity = pushDirection.normalized * Mathf.Max(0f, pushSpeed);
+        externalPushTimer = Mathf.Max(0f, pushDuration);
     }
 
     public void TakeDamage(float damage)

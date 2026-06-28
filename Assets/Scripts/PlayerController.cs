@@ -38,14 +38,18 @@ public class PlayerController : MonoBehaviour
     public List<int> playerLevels;
 
     public  Weapon activeWeapon;
+    public int CharacterIndex => characterIndex;
 
     private bool immune;
+    private bool skillInvulnerable;
     [SerializeField] private float immunityDuration;
     [SerializeField] private float immunityTimer;
     [SerializeField] private float immunityBlinkInterval = 0.08f;
     [SerializeField] private float immunityBlinkAlpha = 0.35f;
     private Color originalSpriteColor = Color.white;
     private Coroutine immunityBlinkCoroutine;
+    private float movementOverrideTimer;
+    private Vector2 movementOverrideVelocity;
 
     void Awake()
     {
@@ -138,6 +142,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (movementOverrideTimer > 0f)
+        {
+            movementOverrideTimer -= Time.fixedDeltaTime;
+            rigidBody.linearVelocity = movementOverrideVelocity;
+            return;
+        }
+
         rigidBody.linearVelocity = new Vector2(
             playerMoveDirection.x * moveSpeed,
             playerMoveDirection.y * moveSpeed
@@ -146,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        if (!immune)
+        if (!immune && !skillInvulnerable)
         {
             immune = true;
             immunityTimer = immunityDuration;
@@ -161,6 +172,30 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.GameOver();
             }
         }
+    }
+
+    public void SetSkillInvulnerable(bool isInvulnerable)
+    {
+        skillInvulnerable = isInvulnerable;
+    }
+
+    public void SetMovementOverride(Vector2 velocity, float duration)
+    {
+        movementOverrideVelocity = velocity;
+        movementOverrideTimer = Mathf.Max(0f, duration);
+    }
+
+    public void TeleportTo(Vector2 position)
+    {
+        movementOverrideTimer = 0f;
+
+        if (rigidBody != null)
+        {
+            rigidBody.position = position;
+            rigidBody.linearVelocity = Vector2.zero;
+        }
+
+        transform.position = position;
     }
 
     void OnDisable()

@@ -2118,11 +2118,11 @@ RectTransform:
   - {fileID: 1144514189}
   m_Father: {fileID: 1777638963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -300, y: -20}
-  m_SizeDelta: {x: 330, y: 58}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 20, y: -20}
+  m_SizeDelta: {x: 250, y: 52}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &314636353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,7 +2135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
-  m_EffectColor: {r: 0.56, g: 0.82, b: 1, a: 0.65}
+  m_EffectColor: {r: 0.82, g: 0.58, b: 0.22, a: 0.74}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &314636354
@@ -2151,7 +2151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.045, g: 0.035, b: 0.055, a: 0.92}
+  m_Color: {r: 0.035, g: 0.025, b: 0.045, a: 0.84}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8478,8 +8478,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290969517
-  m_fontColor: {r: 0.68, g: 1, b: 0.76, a: 1}
+    rgba: 4289920926
+  m_fontColor: {r: 0.62, g: 1, b: 0.7, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8496,12 +8496,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20
-  m_fontSizeMax: 32
+  m_fontSizeMin: 18
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -8581,7 +8581,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -36, y: -12}
+  m_SizeDelta: {x: -20, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1162472990
 GameObject:
@@ -48875,9 +48875,9 @@ MonoBehaviour:
   levelText: {fileID: 1315519258}
   timerText: {fileID: 776398048}
   skillCooldownText: {fileID: 1144514186}
-  skillReadyColor: {r: 0.68, g: 1, b: 0.76, a: 1}
-  skillCooldownColor: {r: 1, g: 0.78, b: 0.42, a: 1}
-  skillActiveColor: {r: 0.62, g: 0.9, b: 1, a: 1}
+  skillReadyColor: {r: 0.62, g: 1, b: 0.7, a: 1}
+  skillCooldownColor: {r: 1, g: 0.86, b: 0.52, a: 1}
+  skillActiveColor: {r: 0.55, g: 0.9, b: 1, a: 1}
   survivedTimeText: {fileID: 1728541316}
   victoryPanel: {fileID: 354576280}
   victoryStatusText: {fileID: 1966299552}

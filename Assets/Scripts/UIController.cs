@@ -23,6 +23,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text experienceText;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text skillCooldownText;
+    [SerializeField] private Color skillReadyColor = new Color(0.62f, 1f, 0.7f, 1f);
+    [SerializeField] private Color skillCooldownColor = new Color(1f, 0.86f, 0.52f, 1f);
+    [SerializeField] private Color skillActiveColor = new Color(0.55f, 0.9f, 1f, 1f);
 
     [Header("Panels")]
     [SerializeField] private TMP_Text survivedTimeText;
@@ -44,6 +48,7 @@ public class UIController : MonoBehaviour
     private bool hasLevelUpPanelBaseScale;
     private bool hasLevelTextBaseScale;
     private int shownLevel;
+    private string skillStatusText = "";
     private Canvas rootCanvas;
 
     private void Awake()
@@ -122,8 +127,28 @@ public class UIController : MonoBehaviour
     {
         if (timerText != null)
         {
-            timerText.text = "Time " + FormatTime(timer);
+            bool shouldUseTimerFallback = skillCooldownText == null && !string.IsNullOrEmpty(skillStatusText);
+            timerText.text = !shouldUseTimerFallback
+                ? "Time " + FormatTime(timer)
+                : "Time " + FormatTime(timer) + "\n" + skillStatusText;
         }
+    }
+
+    public void UpdateSkillCooldown(string skillName, float cooldownRemaining, float activeRemaining, bool isActive)
+    {
+        if (isActive && activeRemaining > 0f)
+        {
+            SetSkillStatus(skillName + " " + FormatSeconds(activeRemaining), skillActiveColor);
+            return;
+        }
+
+        if (cooldownRemaining > 0f)
+        {
+            SetSkillStatus(skillName + " " + FormatSeconds(cooldownRemaining), skillCooldownColor);
+            return;
+        }
+
+        SetSkillStatus(skillName + " Ready", skillReadyColor);
     }
 
     public void ShowGameOver(float survivedTime)
@@ -371,11 +396,27 @@ public class UIController : MonoBehaviour
         return Mathf.RoundToInt(value * HealthDisplayScale).ToString();
     }
 
+    private void SetSkillStatus(string statusText, Color statusColor)
+    {
+        skillStatusText = statusText;
+
+        if (skillCooldownText != null)
+        {
+            skillCooldownText.text = statusText;
+            skillCooldownText.color = statusColor;
+        }
+    }
+
     private string FormatTime(float timer)
     {
         int minute = Mathf.FloorToInt(timer / 60f);
         int second = Mathf.FloorToInt(timer % 60f);
 
         return minute + ":" + second.ToString("00");
+    }
+
+    private string FormatSeconds(float seconds)
+    {
+        return Mathf.CeilToInt(Mathf.Max(0f, seconds)).ToString() + "s";
     }
 }
