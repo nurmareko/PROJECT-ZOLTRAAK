@@ -275,21 +275,21 @@ MonoBehaviour:
     damage: 1
     range: 1.5
     speed: 0.5
-    description: upgrade 1 desc
+    description: Summons a damage zone around Player A.
   - cooldown: 5
     duration: 3
     amount: 1
     damage: 1
     range: 1.7
     speed: 0.7
-    description: upgrade 2 desc
+    description: The damage zone reaches farther and ticks faster.
   - cooldown: 5
     duration: 3
     amount: 1
     damage: 1.5
     range: 2
     speed: 0.8
-    description: upgrade 3 desc
+    description: The damage zone grows wider, faster, and hits harder.
   weaponImage: {fileID: 1534607471472308796, guid: eefaa56d3349ce6c6b063136240cae8d, type: 3}
   spawnSound: {fileID: 6414065578143333680}
   despawnSound: {fileID: 480478878018070884}
