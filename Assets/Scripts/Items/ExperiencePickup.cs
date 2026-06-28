@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -12,8 +13,12 @@ public class ExperiencePickup : MonoBehaviour
     [SerializeField] private float magnetSpeed = 5f;
     [SerializeField] private float bobHeight = 0.08f;
     [SerializeField] private float bobFrequency = 4.5f;
+    [SerializeField] private float collectPopDuration = 0.18f;
+    [SerializeField] private float collectPopScale = 1.45f;
+    [SerializeField] private float collectFloatDistance = 0.18f;
 
     private SpriteRenderer spriteRenderer;
+    private CircleCollider2D pickupCollider;
     private Vector3 startPosition;
     private bool collected;
 
@@ -42,7 +47,7 @@ public class ExperiencePickup : MonoBehaviour
 
         spriteRenderer.sortingOrder = Mathf.Max(spriteRenderer.sortingOrder, 6);
 
-        CircleCollider2D pickupCollider = GetComponent<CircleCollider2D>();
+        pickupCollider = GetComponent<CircleCollider2D>();
         pickupCollider.isTrigger = true;
         pickupCollider.radius = collectRadius;
     }
@@ -54,6 +59,11 @@ public class ExperiencePickup : MonoBehaviour
 
     private void Update()
     {
+        if (collected)
+        {
+            return;
+        }
+
         if (PlayerController.Instance != null && PlayerController.Instance.gameObject.activeSelf)
         {
             Vector3 playerPosition = PlayerController.Instance.transform.position;
@@ -91,6 +101,38 @@ public class ExperiencePickup : MonoBehaviour
 
         collected = true;
         PlayerController.Instance.GetExperience(experienceValue);
+
+        if (pickupCollider != null)
+        {
+            pickupCollider.enabled = false;
+        }
+
+        StartCoroutine(PlayCollectFeedback());
+    }
+
+    private IEnumerator PlayCollectFeedback()
+    {
+        Vector3 initialScale = transform.localScale;
+        Vector3 initialPosition = transform.position;
+        Color initialColor = spriteRenderer.color;
+        float elapsed = 0f;
+        float duration = Mathf.Max(0.01f, collectPopDuration);
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float pop = Mathf.Sin(t * Mathf.PI);
+            transform.localScale = Vector3.LerpUnclamped(initialScale, initialScale * collectPopScale, pop);
+            transform.position = initialPosition + Vector3.up * (collectFloatDistance * t);
+
+            Color color = Color.Lerp(initialColor, Color.white, pop);
+            color.a = Mathf.Lerp(initialColor.a, 0f, t);
+            spriteRenderer.color = color;
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         Destroy(gameObject);
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,9 @@ public class UIController : MonoBehaviour
 {
     private const int RequiredLevelUpButtonCount = 3;
     private const float LevelUpButtonSpacing = 360f;
+    private const float LevelUpPanelPulseDuration = 0.22f;
+    private const float LevelUpPanelStartScale = 0.96f;
+    private const float LevelUpPanelPeakScale = 1.04f;
 
     public static UIController Instance;
     [SerializeField] private Slider playerHealthSlider;
@@ -20,6 +24,10 @@ public class UIController : MonoBehaviour
     public GameObject PausePanel;
 
     public LevelUpButton[] levelUpButtons; 
+
+    private Coroutine levelUpPanelPulseCoroutine;
+    private Vector3 levelUpPanelBaseScale = Vector3.one;
+    private bool hasLevelUpPanelBaseScale;
 
     void Awake()
     {
@@ -80,10 +88,12 @@ public class UIController : MonoBehaviour
         EnsureLevelUpButtons();
         levelUpPanel.SetActive(true);
         Time.timeScale = 0f;
+        PlayLevelUpPanelPulse();
     }
 
     public void LevelUpPanelClose()
     {
+        StopLevelUpPanelPulse();
         levelUpPanel.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -192,6 +202,66 @@ public class UIController : MonoBehaviour
             position.x = (i - centerOffset) * LevelUpButtonSpacing;
             buttonTransform.anchoredPosition = position;
         }
+    }
+
+    private void PlayLevelUpPanelPulse()
+    {
+        if (levelUpPanel == null)
+        {
+            return;
+        }
+
+        RectTransform panelTransform = levelUpPanel.GetComponent<RectTransform>();
+
+        if (panelTransform == null)
+        {
+            return;
+        }
+
+        if (!hasLevelUpPanelBaseScale)
+        {
+            levelUpPanelBaseScale = panelTransform.localScale;
+            hasLevelUpPanelBaseScale = true;
+        }
+
+        StopLevelUpPanelPulse();
+        levelUpPanelPulseCoroutine = StartCoroutine(PulseLevelUpPanel(panelTransform));
+    }
+
+    private void StopLevelUpPanelPulse()
+    {
+        if (levelUpPanelPulseCoroutine != null)
+        {
+            StopCoroutine(levelUpPanelPulseCoroutine);
+            levelUpPanelPulseCoroutine = null;
+        }
+
+        if (hasLevelUpPanelBaseScale && levelUpPanel != null)
+        {
+            levelUpPanel.transform.localScale = levelUpPanelBaseScale;
+        }
+    }
+
+    private IEnumerator PulseLevelUpPanel(RectTransform panelTransform)
+    {
+        float elapsed = 0f;
+        Vector3 startScale = levelUpPanelBaseScale * LevelUpPanelStartScale;
+        Vector3 peakScale = levelUpPanelBaseScale * LevelUpPanelPeakScale;
+
+        while (elapsed < LevelUpPanelPulseDuration)
+        {
+            float t = elapsed / LevelUpPanelPulseDuration;
+            float eased = Mathf.SmoothStep(0f, 1f, t);
+            panelTransform.localScale = t < 0.5f
+                ? Vector3.Lerp(startScale, peakScale, eased * 2f)
+                : Vector3.Lerp(peakScale, levelUpPanelBaseScale, (eased - 0.5f) * 2f);
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        panelTransform.localScale = levelUpPanelBaseScale;
+        levelUpPanelPulseCoroutine = null;
     }
 
     private void UpdateSurvivedTime(float survivedTime)
