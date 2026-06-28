@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 161391771}
   - component: {fileID: 161391770}
   - component: {fileID: 161391769}
+  - component: {fileID: 161391773}
   m_Layer: 5
   m_Name: Play Char C Button
   m_TagString: Untagged
@@ -428,6 +429,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161391767}
   m_CullTransparentMesh: 1
+--- !u!114 &161391773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161391767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b84c06698c05a4a886db06a8fa8bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnimator
+  normalScale: 1
+  hoverScale: 1.08
+  pressedScale: 0.94
+  animationSpeed: 12
+  target: {fileID: 0}
 --- !u!1 &164591355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,6 +1718,7 @@ GameObject:
   - component: {fileID: 1349154846}
   - component: {fileID: 1349154845}
   - component: {fileID: 1349154844}
+  - component: {fileID: 1349154848}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -1843,6 +1862,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349154842}
   m_CullTransparentMesh: 1
+--- !u!114 &1349154848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349154842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b84c06698c05a4a886db06a8fa8bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnimator
+  normalScale: 1
+  hoverScale: 1.08
+  pressedScale: 0.94
+  animationSpeed: 12
+  target: {fileID: 0}
 --- !u!1 &1401461980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,6 +1892,7 @@ GameObject:
   - component: {fileID: 1401461984}
   - component: {fileID: 1401461983}
   - component: {fileID: 1401461982}
+  - component: {fileID: 1401461986}
   m_Layer: 5
   m_Name: Play Char A Button
   m_TagString: Untagged
@@ -1999,6 +2036,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401461980}
   m_CullTransparentMesh: 1
+--- !u!114 &1401461986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401461980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b84c06698c05a4a886db06a8fa8bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnimator
+  normalScale: 1
+  hoverScale: 1.08
+  pressedScale: 0.94
+  animationSpeed: 12
+  target: {fileID: 0}
 --- !u!1 &1988395312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,6 +2066,7 @@ GameObject:
   - component: {fileID: 1988395316}
   - component: {fileID: 1988395315}
   - component: {fileID: 1988395314}
+  - component: {fileID: 1988395318}
   m_Layer: 5
   m_Name: Play Char B Button
   m_TagString: Untagged
@@ -2155,6 +2210,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988395312}
   m_CullTransparentMesh: 1
+--- !u!114 &1988395318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988395312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b84c06698c05a4a886db06a8fa8bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnimator
+  normalScale: 1
+  hoverScale: 1.08
+  pressedScale: 0.94
+  animationSpeed: 12
+  target: {fileID: 0}
 --- !u!1 &2127657124
 GameObject:
   m_ObjectHideFlags: 0
