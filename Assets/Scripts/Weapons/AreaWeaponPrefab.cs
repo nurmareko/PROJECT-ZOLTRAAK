@@ -27,7 +27,7 @@ public class AreaWeaponPrefab : MonoBehaviour
         targetSize = Vector3.one * weapon.stats[weapon.weaponLevel].range;
         transform.localScale = Vector3.zero;
         timer = weapon.stats[weapon.weaponLevel].duration;
-        AudioController.Instance.PlaySound(AudioController.Instance.areaWeaponSpawn);
+        weapon.PlaySpawnSound(AudioController.Instance != null ? AudioController.Instance.areaWeaponSpawn : null);
     }
 
     // Update is called once per frame
