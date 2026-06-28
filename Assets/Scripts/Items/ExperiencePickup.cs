@@ -5,7 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class ExperiencePickup : MonoBehaviour
 {
+    private const string PickupSortingLayer = "Objects";
+    private const int PickupSortingOrder = 4;
+    private const int ShadowSortingOrderOffset = -1;
+
     private static Sprite generatedSprite;
+    private static AudioClip generatedCollectSound;
 
     [SerializeField] private int experienceValue = 1;
     [SerializeField] private float collectRadius = 0.45f;
@@ -16,8 +21,11 @@ public class ExperiencePickup : MonoBehaviour
     [SerializeField] private float collectPopDuration = 0.18f;
     [SerializeField] private float collectPopScale = 1.45f;
     [SerializeField] private float collectFloatDistance = 0.18f;
+    [SerializeField] private AudioClip collectSound;
+    [SerializeField, Range(0f, 1f)] private float collectSoundVolume = 0.7f;
 
     private SpriteRenderer spriteRenderer;
+    private SpriteRenderer shadowRenderer;
     private CircleCollider2D pickupCollider;
     private Vector3 startPosition;
     private bool collected;
@@ -45,7 +53,8 @@ public class ExperiencePickup : MonoBehaviour
             spriteRenderer.sprite = GetGeneratedSprite();
         }
 
-        spriteRenderer.sortingOrder = Mathf.Max(spriteRenderer.sortingOrder, 6);
+        ConfigureSpriteRenderer(spriteRenderer, PickupSortingOrder, Color.white);
+        EnsureShadowRenderer();
 
         pickupCollider = GetComponent<CircleCollider2D>();
         pickupCollider.isTrigger = true;
@@ -101,6 +110,7 @@ public class ExperiencePickup : MonoBehaviour
 
         collected = true;
         PlayerController.Instance.GetExperience(experienceValue);
+        PlayCollectSound();
 
         if (pickupCollider != null)
         {
@@ -129,11 +139,101 @@ public class ExperiencePickup : MonoBehaviour
             color.a = Mathf.Lerp(initialColor.a, 0f, t);
             spriteRenderer.color = color;
 
+            if (shadowRenderer != null)
+            {
+                Color shadowColor = shadowRenderer.color;
+                shadowColor.a = Mathf.Lerp(0.35f, 0f, t);
+                shadowRenderer.color = shadowColor;
+            }
+
             elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
         Destroy(gameObject);
+    }
+
+    private void ConfigureSpriteRenderer(SpriteRenderer renderer, int sortingOrder, Color fallbackColor)
+    {
+        if (renderer == null)
+        {
+            return;
+        }
+
+        int sortingLayerId = SortingLayer.NameToID(PickupSortingLayer);
+        if (sortingLayerId != 0)
+        {
+            renderer.sortingLayerID = sortingLayerId;
+        }
+
+        renderer.sortingOrder = Mathf.Max(renderer.sortingOrder, sortingOrder);
+        if (renderer.color.a <= 0.01f)
+        {
+            renderer.color = fallbackColor;
+        }
+    }
+
+    private void EnsureShadowRenderer()
+    {
+        if (shadowRenderer != null || spriteRenderer == null)
+        {
+            return;
+        }
+
+        GameObject shadowObject = new GameObject("XP Pickup Shadow");
+        shadowObject.transform.SetParent(transform, false);
+        shadowObject.transform.localPosition = new Vector3(0.06f, -0.06f, 0f);
+        shadowObject.transform.localScale = Vector3.one * 1.1f;
+
+        shadowRenderer = shadowObject.AddComponent<SpriteRenderer>();
+        shadowRenderer.sprite = spriteRenderer.sprite;
+        shadowRenderer.color = new Color(0f, 0f, 0f, 0.35f);
+        ConfigureSpriteRenderer(
+            shadowRenderer,
+            PickupSortingOrder + ShadowSortingOrderOffset,
+            new Color(0f, 0f, 0f, 0.35f));
+    }
+
+    private void PlayCollectSound()
+    {
+        AudioClip soundToPlay = collectSound != null ? collectSound : GetGeneratedCollectSound();
+        if (soundToPlay == null || collectSoundVolume <= 0f)
+        {
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(soundToPlay, transform.position, collectSoundVolume);
+    }
+
+    private static AudioClip GetGeneratedCollectSound()
+    {
+        if (generatedCollectSound != null)
+        {
+            return generatedCollectSound;
+        }
+
+        const int sampleRate = 44100;
+        const float duration = 0.16f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)sampleRate;
+            float normalized = i / (float)sampleCount;
+            float envelope = Mathf.Sin(normalized * Mathf.PI);
+            float frequency = Mathf.Lerp(880f, 1320f, normalized);
+            samples[i] = Mathf.Sin(2f * Mathf.PI * frequency * t) * envelope * 0.35f;
+        }
+
+        generatedCollectSound = AudioClip.Create(
+            "Generated XP Collect",
+            sampleCount,
+            1,
+            sampleRate,
+            false);
+        generatedCollectSound.SetData(samples, 0);
+        return generatedCollectSound;
     }
 
     private static Sprite GetGeneratedSprite()

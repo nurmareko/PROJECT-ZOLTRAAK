@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     private const int RequiredLevelUpButtonCount = 3;
+    private const float HealthDisplayScale = 10f;
     private const float LevelUpPanelPulseDuration = 0.22f;
     private const float LevelUpPanelStartScale = 0.96f;
     private const float LevelUpPanelPeakScale = 1.04f;
@@ -55,14 +56,25 @@ public class UIController : MonoBehaviour
 
     public void UpdateHealthSlider()
     {
-        if (playerHealthSlider == null || healthText == null || PlayerController.Instance == null)
+        if (PlayerController.Instance == null)
         {
             return;
         }
 
-        playerHealthSlider.maxValue = PlayerController.Instance.maxHealth;
-        playerHealthSlider.value = PlayerController.Instance.currentHealth;
-        healthText.text = "HP " + FormatValue(playerHealthSlider.value) + " / " + FormatValue(playerHealthSlider.maxValue);
+        float maxHealth = Mathf.Max(0f, PlayerController.Instance.maxHealth);
+        float currentHealth = Mathf.Clamp(PlayerController.Instance.currentHealth, 0f, maxHealth);
+
+        if (playerHealthSlider != null)
+        {
+            playerHealthSlider.minValue = 0f;
+            playerHealthSlider.maxValue = Mathf.Max(1f, maxHealth);
+            playerHealthSlider.value = currentHealth;
+        }
+
+        if (healthText != null)
+        {
+            healthText.text = "HP " + FormatHealthValue(currentHealth) + " / " + FormatHealthValue(maxHealth);
+        }
     }
 
     public void UpdateExperienceSlider()
@@ -281,6 +293,11 @@ public class UIController : MonoBehaviour
         return Mathf.Approximately(value, Mathf.Round(value))
             ? Mathf.RoundToInt(value).ToString()
             : value.ToString("0.#");
+    }
+
+    private string FormatHealthValue(float value)
+    {
+        return Mathf.RoundToInt(value * HealthDisplayScale).ToString();
     }
 
     private string FormatTime(float timer)

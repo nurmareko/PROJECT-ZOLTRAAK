@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private const int DefaultFirstLevelExperience = 5;
+    private const float HealthDisplayScale = 10f;
 
     public static PlayerController Instance;
 
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
             immune = true;
             immunityTimer = immunityDuration;
             StartImmunityBlink();
-            currentHealth -= damage;
+            currentHealth = ClampHealth(currentHealth - damage);
 
             UIController.Instance.UpdateHealthSlider();
 
@@ -174,7 +175,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+        currentHealth = ClampHealth(currentHealth + healAmount);
         UIController.Instance.UpdateHealthSlider();
     }
 
@@ -235,7 +236,7 @@ public class PlayerController : MonoBehaviour
     public void UpgradeHealth()
     {
         maxHealth += healthUpgradeAmount;
-        currentHealth = Mathf.Min(currentHealth + healthUpgradeAmount, maxHealth);
+        currentHealth = ClampHealth(currentHealth + healthUpgradeAmount);
         UIController.Instance.UpdateHealthSlider();
     }
 
@@ -246,7 +247,7 @@ public class PlayerController : MonoBehaviour
 
     public string GetHealthUpgradeDescription()
     {
-        return "Increase max health by " + FormatUpgradeValue(healthUpgradeAmount) +
+        return "Increase max health by " + FormatHealthDisplayValue(healthUpgradeAmount) +
             " and heal for the same amount.";
     }
 
@@ -273,6 +274,16 @@ public class PlayerController : MonoBehaviour
     private string FormatUpgradeValue(float value)
     {
         return value.ToString("0.##");
+    }
+
+    private string FormatHealthDisplayValue(float value)
+    {
+        return Mathf.RoundToInt(value * HealthDisplayScale).ToString();
+    }
+
+    private float ClampHealth(float health)
+    {
+        return Mathf.Clamp(health, 0f, Mathf.Max(0f, maxHealth));
     }
 
     private void EnsurePlayerLevels()
