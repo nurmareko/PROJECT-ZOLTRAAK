@@ -47,7 +47,6 @@ public class LevelUpButton : MonoBehaviour
     {
         assignedUpgrade?.Invoke();
         UIController.Instance.LevelUpPanelClose();
-        AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
 
     private string GetWeaponDescription(Weapon weapon)

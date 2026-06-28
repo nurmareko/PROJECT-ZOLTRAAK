@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Small, reusable button feedback animation. Scales its target up on
@@ -17,8 +18,11 @@ using UnityEngine.EventSystems;
 public class UIButtonAnimator : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler,
     IPointerDownHandler, IPointerUpHandler,
-    ISelectHandler, IDeselectHandler
+    ISelectHandler, IDeselectHandler,
+    ISubmitHandler
 {
+    private const float ClickSoundDebounceSeconds = 0.05f;
+
     [Header("Scale Multipliers (relative to authored scale)")]
     [SerializeField] private float normalScale = 1f;
     [SerializeField] private float hoverScale = 1.08f;
@@ -32,13 +36,23 @@ public class UIButtonAnimator : MonoBehaviour,
     [Tooltip("Transform to scale. Defaults to this object's RectTransform when left empty.")]
     [SerializeField] private RectTransform target;
 
+    [Header("Audio")]
+    [Tooltip("Fallback click sound when there is no AudioController in the scene.")]
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField, Range(0f, 1f)] private float clickSoundVolume = 1f;
+
+    private Button button;
     private bool isHovered;
     private bool isPressed;
     private bool isSelected;
     private Vector3 baseScale = Vector3.one;
+    private static AudioSource sharedClickSource;
+    private static float lastClickSoundTime = -1f;
 
     private void Awake()
     {
+        button = GetComponent<Button>();
+
         if (target == null)
         {
             target = transform as RectTransform;
@@ -94,8 +108,61 @@ public class UIButtonAnimator : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData eventData) => isHovered = true;
     public void OnPointerExit(PointerEventData eventData) => isHovered = false;
-    public void OnPointerDown(PointerEventData eventData) => isPressed = true;
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        isPressed = true;
+
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            return;
+        }
+
+        PlayClickSound();
+    }
     public void OnPointerUp(PointerEventData eventData) => isPressed = false;
     public void OnSelect(BaseEventData eventData) => isSelected = true;
     public void OnDeselect(BaseEventData eventData) => isSelected = false;
+    public void OnSubmit(BaseEventData eventData) => PlayClickSound();
+
+    private void PlayClickSound()
+    {
+        if (button != null && (!button.IsActive() || !button.IsInteractable()))
+        {
+            return;
+        }
+
+        if (Time.unscaledTime - lastClickSoundTime < ClickSoundDebounceSeconds)
+        {
+            return;
+        }
+
+        if (clickSound != null)
+        {
+            lastClickSoundTime = Time.unscaledTime;
+            PlaySharedClickSound(clickSound, clickSoundVolume);
+            return;
+        }
+
+        if (AudioController.Instance != null && AudioController.Instance.PlayUIButtonClick())
+        {
+            lastClickSoundTime = Time.unscaledTime;
+        }
+    }
+
+    private static void PlaySharedClickSound(AudioClip clip, float volume)
+    {
+        if (sharedClickSource == null)
+        {
+            GameObject sourceObject = new GameObject("UI Button Click Audio");
+            DontDestroyOnLoad(sourceObject);
+
+            sharedClickSource = sourceObject.AddComponent<AudioSource>();
+            sharedClickSource.playOnAwake = false;
+            sharedClickSource.loop = false;
+            sharedClickSource.spatialBlend = 0f;
+            sharedClickSource.ignoreListenerPause = true;
+        }
+
+        sharedClickSource.PlayOneShot(clip, volume);
+    }
 }

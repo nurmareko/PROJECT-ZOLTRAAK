@@ -749,6 +749,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!114 &198717109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3074,6 +3076,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!114 &474809935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,6 +5534,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!114 &761304291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6558,6 +6564,7 @@ MonoBehaviour:
   directionalWeaponSpawn: {fileID: 119691664}
   directionalWeaponHit: {fileID: 1713608072}
   gameOver: {fileID: 1162828945}
+  uiButtonClick: {fileID: 632125741}
 --- !u!1 &869227812
 GameObject:
   m_ObjectHideFlags: 0
@@ -6873,6 +6880,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!1 &907230043
 GameObject:
   m_ObjectHideFlags: 0
@@ -6931,6 +6940,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!95 &907230046
 Animator:
   serializedVersion: 7
@@ -9330,6 +9341,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!1 &1235498825
 GameObject:
   m_ObjectHideFlags: 0
@@ -10695,6 +10708,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!1 &1460787817
 GameObject:
   m_ObjectHideFlags: 0
@@ -45956,6 +45971,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!95 &1745731538
 Animator:
   serializedVersion: 7
@@ -146062,6 +146079,8 @@ MonoBehaviour:
   pressedScale: 0.94
   animationSpeed: 12
   target: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 8f452055e55390efaa54427f7865c423, type: 3}
+  clickSoundVolume: 1
 --- !u!114 &1999910484
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class AudioController : MonoBehaviour
     public AudioSource directionalWeaponSpawn;
     public AudioSource directionalWeaponHit;
     public AudioSource gameOver;
+    public AudioSource uiButtonClick;
 
     private void Awake(){
         if (Instance != null && Instance != this){
@@ -43,5 +44,16 @@ public class AudioController : MonoBehaviour
         sound.pitch = Random.Range(0.7f, 1.3f);
         sound.Stop();
         sound.Play();
+    }
+
+    public bool PlayUIButtonClick()
+    {
+        if (uiButtonClick == null)
+        {
+            return false;
+        }
+
+        PlaySound(uiButtonClick);
+        return true;
     }
 }
