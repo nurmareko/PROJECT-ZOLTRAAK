@@ -3,12 +3,9 @@ using UnityEngine;
 public class SpinWeaponPrefab : MonoBehaviour
 {
     private const float BaseSpinDegreesPerSecond = 150f;
-    private const float PulseFrequency = 8f;
-    private const float PulseAmount = 0.16f;
 
     public SpinWeapon weapon;
     private float duration;
-    private float startingDuration;
     private Vector3 targetSize;
     private float spinDirection = 1f;
     private float orbitRange;
@@ -28,7 +25,6 @@ public class SpinWeaponPrefab : MonoBehaviour
         }
 
         duration = weapon.stats[weapon.weaponLevel].duration;
-        startingDuration = duration;
         //Destroy(gameObject, duration);
         targetSize = Vector3.one;
         transform.localScale = Vector3.zero;
@@ -47,10 +43,6 @@ public class SpinWeaponPrefab : MonoBehaviour
         float spinSpeed = BaseSpinDegreesPerSecond * spinDirection * weapon.stats[weapon.weaponLevel].speed;
         transform.rotation = Quaternion.Euler(0f, 0f, transform.rotation.eulerAngles.z + (spinSpeed * Time.deltaTime));
 
-        float elapsed = startingDuration - duration;
-        float pulse = Mathf.Sin(elapsed * PulseFrequency) * PulseAmount;
-        SetProjectileOrbitPosition(orbitRange + pulse);
-
         // grow
         transform.localScale = Vector3.MoveTowards(transform.localScale, targetSize, Time.deltaTime * 4);
         // shrink
@@ -66,24 +58,6 @@ public class SpinWeaponPrefab : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
-
-    public Vector2 GetSwirlDirection(Vector2 enemyPosition)
-    {
-        Vector2 center = transform.position;
-        Vector2 radialDirection = enemyPosition - center;
-
-        if (radialDirection.sqrMagnitude <= 0.001f && projectile != null)
-        {
-            radialDirection = (Vector2)projectile.transform.position - center;
-        }
-
-        radialDirection = radialDirection.sqrMagnitude > 0.001f ? radialDirection.normalized : Vector2.up;
-        Vector2 tangentDirection = spinDirection > 0f
-            ? new Vector2(-radialDirection.y, radialDirection.x)
-            : new Vector2(radialDirection.y, -radialDirection.x);
-
-        return ((tangentDirection * 1.1f) + (radialDirection * 0.2f)).normalized;
     }
 
     public void SetRotationOffset(float rotationOffset, float rotationDirection){

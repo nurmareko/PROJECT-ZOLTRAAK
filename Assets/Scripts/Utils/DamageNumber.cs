@@ -19,8 +19,15 @@ public class DamageNumber : MonoBehaviour
         transform.position += Vector3.up * Time.deltaTime * floatSpeed;
     }
 
-    public void SetValue(int value)
+    public void SetValue(float value)
     {
-        damageText.text = value.ToString();
+        damageText.text = FormatValue(value);
+    }
+
+    private string FormatValue(float value)
+    {
+        return Mathf.Approximately(value, Mathf.Round(value))
+            ? Mathf.RoundToInt(value).ToString()
+            : value.ToString("0.##");
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class SpinWeaponProjectile : MonoBehaviour
 {
-    private const float MinHitCooldown = 0.06f;
-    private const float BaseHitCooldown = 0.24f;
+    private const float MinHitCooldown = 0.1f;
+    private const float BaseHitCooldown = 0.5f;
 
     private SpinWeapon weapon;
     private SpinWeaponPrefab weaponPrefab;
@@ -23,13 +23,6 @@ public class SpinWeaponProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider){
         if (collider.CompareTag("Enemy")){
             TryHitEnemy(collider);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collider){
-        if (collider.CompareTag("Enemy")){
-            TryHitEnemy(collider);
-            SwirlEnemy(collider);
         }
     }
 
@@ -70,18 +63,6 @@ public class SpinWeaponProjectile : MonoBehaviour
         KnockEnemyOutward(collider);
     }
 
-    private void SwirlEnemy(Collider2D collider)
-    {
-        if (weapon == null || weaponPrefab == null)
-        {
-            return;
-        }
-
-        Vector2 swirlDirection = weaponPrefab.GetSwirlDirection(collider.transform.position);
-        float shoveDistance = (0.75f + weapon.stats[weapon.weaponLevel].speed * 0.18f) * Time.fixedDeltaTime;
-        MoveEnemy(collider, swirlDirection, shoveDistance);
-    }
-
     private void KnockEnemyOutward(Collider2D collider)
     {
         if (weapon == null || weaponPrefab == null)
@@ -90,7 +71,7 @@ public class SpinWeaponProjectile : MonoBehaviour
         }
 
         Vector2 outwardDirection = weaponPrefab.GetOutwardDirection(collider.transform.position);
-        float knockDistance = 0.12f + (weapon.stats[weapon.weaponLevel].speed * 0.04f);
+        float knockDistance = 0.08f + (weapon.stats[weapon.weaponLevel].speed * 0.025f);
         MoveEnemy(collider, outwardDirection, knockDistance);
     }
 

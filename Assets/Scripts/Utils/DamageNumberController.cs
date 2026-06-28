@@ -26,6 +26,6 @@ public class DamageNumberController : MonoBehaviour
             transform
         );
 
-        damageNumber.SetValue(Mathf.RoundToInt(value));
+        damageNumber.SetValue(value);
     }
 }
