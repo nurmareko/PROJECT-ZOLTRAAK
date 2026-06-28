@@ -42,7 +42,11 @@ public class DirectionalWeaponPrefab : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = direction * weapon.stats[weapon.weaponLevel].speed;
         //Destroy(gameObject, weapon.stats[weapon.weaponLevel].duration);
-        weapon.PlaySpawnSound(AudioController.Instance != null ? AudioController.Instance.directionalWeaponSpawn : null);
+        AudioController audioController = AudioController.Instance;
+        if (audioController != null)
+        {
+            audioController.PlaySound(audioController.directionalWeaponSpawn);
+        }
     }
 
 
@@ -61,7 +65,11 @@ public class DirectionalWeaponPrefab : MonoBehaviour
         if (collider.gameObject.CompareTag("Enemy")){
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(weapon.stats[weapon.weaponLevel].damage);
-            weapon.PlayHitSound(AudioController.Instance != null ? AudioController.Instance.directionalWeaponHit : null);
+            AudioController audioController = AudioController.Instance;
+            if (audioController != null)
+            {
+                audioController.PlaySound(audioController.directionalWeaponHit);
+            }
         }
     }
 }
