@@ -135,7 +135,7 @@ MonoBehaviour:
   rigidBody: {fileID: 6100633226815794300}
   animator: {fileID: 6329713244309819150}
   spriteRenderer: {fileID: 2562826436135036078}
-  moveSpeed: 2.6
+  moveSpeed: 3.35
   healthUpgradeAmount: 1
   agilityUpgradeAmount: 0.25
   characterIndex: 1
