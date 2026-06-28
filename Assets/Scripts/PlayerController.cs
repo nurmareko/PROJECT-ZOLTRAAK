@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -40,6 +41,10 @@ public class PlayerController : MonoBehaviour
     private bool immune;
     [SerializeField] private float immunityDuration;
     [SerializeField] private float immunityTimer;
+    [SerializeField] private float immunityBlinkInterval = 0.08f;
+    [SerializeField] private float immunityBlinkAlpha = 0.35f;
+    private Color originalSpriteColor = Color.white;
+    private Coroutine immunityBlinkCoroutine;
 
     void Awake()
     {
@@ -51,6 +56,7 @@ public class PlayerController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            CacheSpriteColor();
             AssignCameraTarget();
         } else
         {
@@ -143,6 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             immune = true;
             immunityTimer = immunityDuration;
+            StartImmunityBlink();
             currentHealth -= damage;
 
             UIController.Instance.UpdateHealthSlider();
@@ -153,6 +160,11 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.GameOver();
             }
         }
+    }
+
+    void OnDisable()
+    {
+        RestoreSpriteColor();
     }
 
     public void Heal(float healAmount)
@@ -348,5 +360,69 @@ public class PlayerController : MonoBehaviour
         }
 
         return activeWeapon;
+    }
+
+    private void StartImmunityBlink()
+    {
+        if (!isActiveAndEnabled || !EnsureSpriteRenderer())
+        {
+            return;
+        }
+
+        if (immunityBlinkCoroutine != null)
+        {
+            StopCoroutine(immunityBlinkCoroutine);
+        }
+
+        immunityBlinkCoroutine = StartCoroutine(ImmunityBlinkRoutine());
+    }
+
+    private IEnumerator ImmunityBlinkRoutine()
+    {
+        bool dimSprite = false;
+
+        while (immune && immunityTimer > 0 && isActiveAndEnabled)
+        {
+            if (spriteRenderer == null)
+            {
+                yield break;
+            }
+
+            Color blinkColor = originalSpriteColor;
+            blinkColor.a = dimSprite ? originalSpriteColor.a : immunityBlinkAlpha;
+            spriteRenderer.color = blinkColor;
+            dimSprite = !dimSprite;
+
+            yield return new WaitForSeconds(immunityBlinkInterval);
+        }
+
+        RestoreSpriteColor();
+        immunityBlinkCoroutine = null;
+    }
+
+    private void CacheSpriteColor()
+    {
+        if (EnsureSpriteRenderer())
+        {
+            originalSpriteColor = spriteRenderer.color;
+        }
+    }
+
+    private void RestoreSpriteColor()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalSpriteColor;
+        }
+    }
+
+    private bool EnsureSpriteRenderer()
+    {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        return spriteRenderer != null;
     }
 }

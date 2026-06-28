@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -11,10 +12,32 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private int experienceToGive;
     [SerializeField] private float pushTime;
+    [SerializeField] private float damageFlashDuration = 0.08f;
+    [SerializeField] private Color damageFlashColor = new Color(1f, 0.35f, 0.35f, 1f);
 
     private float pushCounter;
     private Vector2 direction;
     private bool isDying;
+    private Color originalSpriteColor = Color.white;
+    private Coroutine damageFlashCoroutine;
+
+    void Awake()
+    {
+        EnsureSpriteRenderer();
+
+        if (spriteRenderer != null)
+        {
+            originalSpriteColor = spriteRenderer.color;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalSpriteColor;
+        }
+    }
 
     void FixedUpdate()
     {
@@ -74,6 +97,7 @@ public class Enemy : MonoBehaviour
         DamageNumberController.Instance.CreateNumber(damage, transform.position);
 
         pushCounter = pushTime;
+        PlayDamageFlash();
 
         if(health <= 0)
         {
@@ -83,5 +107,48 @@ public class Enemy : MonoBehaviour
             ExperiencePickup.Create(transform.position, experienceToGive);
             AudioController.Instance.PlaySound(AudioController.Instance.enemyDie);
         }
+    }
+
+    private void PlayDamageFlash()
+    {
+        if (!isActiveAndEnabled || !EnsureSpriteRenderer())
+        {
+            return;
+        }
+
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+        }
+
+        damageFlashCoroutine = StartCoroutine(DamageFlashRoutine());
+    }
+
+    private IEnumerator DamageFlashRoutine()
+    {
+        if (spriteRenderer == null)
+        {
+            yield break;
+        }
+
+        spriteRenderer.color = damageFlashColor;
+        yield return new WaitForSeconds(damageFlashDuration);
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalSpriteColor;
+        }
+
+        damageFlashCoroutine = null;
+    }
+
+    private bool EnsureSpriteRenderer()
+    {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        return spriteRenderer != null;
     }
 }
