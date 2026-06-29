@@ -1989,7 +1989,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.524
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2675,7 +2675,7 @@ MonoBehaviour:
   ambientMistColor: {r: 0.78, g: 0.88, b: 1, a: 0.95}
   ambientEmberColor: {r: 1, g: 0.66, b: 0.32, a: 0.95}
   ambientSortingLayer: Background
-  ambientSortingOrder: 100
+  ambientSortingOrder: 10
   enableVignette: 1
   vignetteIntensity: 0.42
   vignetteSmoothness: 0.45
@@ -48900,7 +48900,7 @@ Canvas:
   m_GameObject: {fileID: 1777638959}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 10
   m_PixelPerfect: 0
