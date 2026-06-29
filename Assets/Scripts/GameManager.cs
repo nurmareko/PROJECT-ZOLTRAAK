@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [SerializeField] private float survivalObjectiveSeconds = 180f;
+    [SerializeField] private float survivalObjectiveSeconds = 300f;
 
     public float gameTime;
     private bool gameActive;

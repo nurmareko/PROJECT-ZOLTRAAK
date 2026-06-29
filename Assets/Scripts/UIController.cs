@@ -76,9 +76,11 @@ public class UIController : MonoBehaviour
 
         if (playerHealthSlider != null)
         {
+            float normalizedHealth = maxHealth > 0f ? currentHealth / maxHealth : 0f;
+
             playerHealthSlider.minValue = 0f;
-            playerHealthSlider.maxValue = Mathf.Max(1f, maxHealth);
-            playerHealthSlider.value = currentHealth;
+            playerHealthSlider.maxValue = 1f;
+            playerHealthSlider.SetValueWithoutNotify(Mathf.Clamp01(normalizedHealth));
         }
 
         if (healthText != null)

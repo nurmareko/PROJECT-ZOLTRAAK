@@ -8964,7 +8964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Survive 3 minutes.
+  m_text: 'Survive 5 minutes.
 
 
     Move: WASD / Arrows
