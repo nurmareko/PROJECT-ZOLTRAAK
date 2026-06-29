@@ -197,10 +197,12 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6209836402569991432}
   rigidBody: {fileID: 7478109828603465121}
   moveSpeed: 2
-  damage: 1.25
-  health: 15
+  damage: 1.6
+  health: 20
   enemyDeathEffect: {fileID: 6061811255798151043, guid: 6982c6048adefd492a456946ab2067a3, type: 3}
   experienceToGive: 10
+  healthPickupDropChance: 0.35
+  healthPickupPrefab: {fileID: 3392184881640375032, guid: b8e5fbcab8d65c2a68201ceda8037e0b, type: 3}
   pushTime: 0.3
 --- !u!1 &8854282451611100487
 GameObject:

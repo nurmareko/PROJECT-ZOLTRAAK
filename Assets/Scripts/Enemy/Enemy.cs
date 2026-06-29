@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private int experienceToGive;
+    [SerializeField, Range(0f, 1f)] private float healthPickupDropChance = 0.12f;
+    [SerializeField] private GameObject healthPickupPrefab;
     [SerializeField] private float pushTime;
     [SerializeField] private float damageFlashDuration = 0.08f;
     [SerializeField] private Color damageFlashColor = new Color(1f, 0.35f, 0.35f, 1f);
@@ -132,10 +134,31 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
             Instantiate(enemyDeathEffect, transform.position, transform.rotation);
             ExperiencePickup.Create(transform.position, experienceToGive);
+            TryDropHealthPickup();
             if (AudioController.Instance != null)
             {
                 AudioController.Instance.PlayModifiedSound(AudioController.Instance.enemyDie);
             }
+        }
+    }
+
+    private void TryDropHealthPickup()
+    {
+        if (healthPickupDropChance <= 0f || Random.value > healthPickupDropChance)
+        {
+            return;
+        }
+
+        if (healthPickupPrefab == null)
+        {
+            HealthPickup.Create(transform.position);
+            return;
+        }
+
+        GameObject pickupObject = Instantiate(healthPickupPrefab, transform.position, Quaternion.identity);
+        if (pickupObject.GetComponent<HealthPickup>() == null)
+        {
+            pickupObject.AddComponent<HealthPickup>();
         }
     }
 

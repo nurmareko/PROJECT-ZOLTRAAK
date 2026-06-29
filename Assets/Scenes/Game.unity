@@ -6349,17 +6349,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   waves:
   - enemyPrefab: {fileID: 5440778069309592530, guid: 775247c0efa31de048c2fa2b45cd4118, type: 3}
-    spawnInterval: 0.85
-    enemiesPerWave: 8
+    spawnInterval: 0.75
+    enemiesPerWave: 10
     spawnedEnemyCount: 0
     spawnTimer: 0
   - enemyPrefab: {fileID: 7454663780394956314, guid: 4e8fdcccecf98e7c1a85735c829e5aa5, type: 3}
-    spawnInterval: 1
-    enemiesPerWave: 8
+    spawnInterval: 0.9
+    enemiesPerWave: 10
     spawnedEnemyCount: 0
     spawnTimer: 0
   - enemyPrefab: {fileID: 2837596936878299267, guid: 51523c7e3e7ac2c8696519df3c094d75, type: 3}
-    spawnInterval: 1.2
+    spawnInterval: 1.1
     enemiesPerWave: 1
     spawnedEnemyCount: 0
     spawnTimer: 0

@@ -25,8 +25,8 @@ public class ActiveSkillController : MonoBehaviour
     [SerializeField] private string playerBSkillName = "Repel";
     [SerializeField] private float playerBCooldown = 19f;
     [SerializeField] private float playerBRepelRadius = 20f;
-    [SerializeField] private float playerBRepelSpeed = 9.5f;
-    [SerializeField] private float playerBRepelDuration = 0.22f;
+    [SerializeField] private float playerBRepelSpeed = 14f;
+    [SerializeField] private float playerBRepelDuration = 0.32f;
 
     [Header("Player C - Lunge")]
     [SerializeField] private string playerCSkillName = "Lunge";

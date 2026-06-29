@@ -71,7 +71,7 @@ public class SpinWeaponProjectile : MonoBehaviour
         }
 
         Vector2 outwardDirection = weaponPrefab.GetOutwardDirection(collider.transform.position);
-        float knockDistance = 0.08f + (weapon.stats[weapon.weaponLevel].speed * 0.025f);
+        float knockDistance = 0.03f + (weapon.stats[weapon.weaponLevel].speed * 0.008f);
         MoveEnemy(collider, outwardDirection, knockDistance);
     }
 

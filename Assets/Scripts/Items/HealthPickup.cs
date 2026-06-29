@@ -6,7 +6,7 @@ public class HealthPickup : MonoBehaviour
 {
     private static Sprite generatedSprite;
 
-    [SerializeField] private float healAmount = 1f;
+    [SerializeField] private float healAmount = 2f;
     [SerializeField] private float lifetime = 8f;
     [SerializeField] private float warningDuration = 2f;
     [SerializeField] private float bobHeight = 0.08f;

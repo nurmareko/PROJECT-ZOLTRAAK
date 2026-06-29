@@ -146,8 +146,8 @@ MonoBehaviour:
   characterLoadouts: []
   playerMoveDirection: {x: 0, y: 0}
   lastMoveDirection: {x: 0, y: -1}
-  maxHealth: 6
-  currentHealth: 5
+  maxHealth: 8
+  currentHealth: 8
   experience: 0
   currentLevel: 1
   maxLevel: 10

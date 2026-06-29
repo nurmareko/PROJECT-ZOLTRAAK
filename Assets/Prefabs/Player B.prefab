@@ -146,8 +146,8 @@ MonoBehaviour:
   characterLoadouts: []
   playerMoveDirection: {x: 0, y: 0}
   lastMoveDirection: {x: 0, y: -1}
-  maxHealth: 8
-  currentHealth: 8
+  maxHealth: 10
+  currentHealth: 10
   experience: 0
   currentLevel: 1
   maxLevel: 10
@@ -178,9 +178,9 @@ MonoBehaviour:
   playerAPushDuration: 0.12
   playerBSkillName: Repel
   playerBCooldown: 19
-  playerBRepelRadius: 12
-  playerBRepelSpeed: 9.5
-  playerBRepelDuration: 0.22
+  playerBRepelRadius: 20
+  playerBRepelSpeed: 14
+  playerBRepelDuration: 0.32
   playerCSkillName: Lunge
   playerCCooldown: 11
   playerCLungeDuration: 0.12
